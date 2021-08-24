@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ChatA.Domain.Entities
 {
-    class GroupMessageRoom
+    public class GroupMessageRoom : Message
     {
         public List<User> UserList { get; set; }
     }

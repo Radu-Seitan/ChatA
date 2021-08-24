@@ -1,17 +1,13 @@
-﻿using ChatA.Domain.Common;
-using ChatA.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChatA.Domain.Enums;
 
 namespace ChatA.Domain.Entities
 {
-    class Membership : BaseEntity
+    public class Membership
     {
         public string UserId { get; set; }
+        public User User { get; set; }
         public int RoomId { get; set; }
+        public MessageRoom MessageRoom { get; set; }
         public MembershipRoles Role { get; set; }
     }
 }

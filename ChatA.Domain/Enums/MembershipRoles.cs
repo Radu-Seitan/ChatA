@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatA.Domain.Enums
 {
-    enum MembershipRoles
+    public enum MembershipRoles
     {
         Default,
         Owner
