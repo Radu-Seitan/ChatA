@@ -2,7 +2,7 @@
 
 namespace ChatA.Domain.Entities
 {
-    public class Membership
+    public class GroupMembership 
     {
         public string UserId { get; set; }
         public User User { get; set; }

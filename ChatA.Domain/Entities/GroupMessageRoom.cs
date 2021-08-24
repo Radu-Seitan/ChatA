@@ -4,6 +4,6 @@ namespace ChatA.Domain.Entities
 {
     public class GroupMessageRoom : Message
     {
-        public List<Membership> Memberships { get; set; }
+        public List<GroupMembership> Memberships { get; set; }
     }
 }
