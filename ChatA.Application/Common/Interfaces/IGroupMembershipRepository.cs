@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChatA.Application.Common.Interfaces
 {
-    public interface IMessageRoomRepository
+    public interface IGroupMembershipRepository
     {
-        void CreateMessageRoom(MessageRoom messageRoom);
-        IEnumerable<MessageRoom> GetMessageRooms(User user);
+        void CreateGroupMembership(User firstUser, User secondUser);
+        IEnumerable<GroupMembership> GetGroupMemberships(User user);
     }
 }
