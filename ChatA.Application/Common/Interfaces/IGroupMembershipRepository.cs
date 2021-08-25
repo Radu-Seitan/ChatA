@@ -1,4 +1,5 @@
 ﻿using ChatA.Domain.Entities;
+using ChatA.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace ChatA.Application.Common.Interfaces
 {
     public interface IGroupMembershipRepository
     {
-        void CreateGroupMembership(User firstUser, User secondUser);
-        IEnumerable<GroupMembership> GetGroupMemberships(User user);
+        Task AddUserToGroupMessageRoom(int roomId, string userId, MembershipRole role);
     }
 }

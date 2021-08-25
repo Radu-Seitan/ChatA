@@ -9,8 +9,7 @@ namespace ChatA.Application.Common.Interfaces
 {
     public interface IMessageRepository
     {
-        void CreateMessage(Message message);
-        IEnumerable<Message> GetMessages(MessageRoom messageRoom);
-        Message GetMessage(int messageId);
+        Task CreateMessage(Message message);
+        Task<IEnumerable<Message>> GetMessages(int messageRoomId);
     }
 }
