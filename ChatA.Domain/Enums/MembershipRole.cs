@@ -1,6 +1,6 @@
 ﻿namespace ChatA.Domain.Enums
 {
-    public enum MembershipRoles
+    public enum MembershipRole
     {
         Default,
         Owner
