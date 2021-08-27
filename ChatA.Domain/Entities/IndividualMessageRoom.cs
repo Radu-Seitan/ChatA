@@ -2,7 +2,9 @@
 {
     public class IndividualMessageRoom : MessageRoom
     {
-        public int MembershipId { get; set; }
-        public IndividualMembership Membership { get; set; }
+        public string FirstUserId { get; set; }
+        public User FirstUser { get; set; }
+        public string SecondUserId { get; set; }
+        public User SecondUser { get; set; }
     }
 }
