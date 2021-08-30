@@ -2,14 +2,14 @@
 
 namespace ChatA.Domain.Common
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         public int Id { get; set; }
-        public DateTime Created { get;}
+        public DateTimeOffset Created { get;}
 
         public BaseEntity()
         {
-            Created = DateTime.Now;
+            Created = DateTimeOffset.Now;
         }
     }
 }
