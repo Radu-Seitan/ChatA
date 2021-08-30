@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatA.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210827103549_Second")]
-    partial class Second
+    [Migration("20210830121904_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace ChatA.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ChatA.Domain.Entities.GroupMembership", b =>
+            modelBuilder.Entity("ChatA.Domain.Entities.Membership", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -35,7 +35,7 @@ namespace ChatA.Infrastructure.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("GroupMemberships");
+                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("ChatA.Domain.Entities.Message", b =>
@@ -45,14 +45,17 @@ namespace ChatA.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("SenderId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -70,15 +73,17 @@ namespace ChatA.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("MessageRooms");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("MessageRoom");
                 });
 
             modelBuilder.Entity("ChatA.Domain.Entities.User", b =>
@@ -101,43 +106,16 @@ namespace ChatA.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ChatA.Domain.Entities.GroupMessageRoom", b =>
+            modelBuilder.Entity("ChatA.Domain.Entities.Membership", b =>
                 {
-                    b.HasBaseType("ChatA.Domain.Entities.MessageRoom");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("GroupMessageRoom");
-                });
-
-            modelBuilder.Entity("ChatA.Domain.Entities.IndividualMessageRoom", b =>
-                {
-                    b.HasBaseType("ChatA.Domain.Entities.MessageRoom");
-
-                    b.Property<string>("FirstUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SecondUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("FirstUserId");
-
-                    b.HasIndex("SecondUserId");
-
-                    b.HasDiscriminator().HasValue("IndividualMessageRoom");
-                });
-
-            modelBuilder.Entity("ChatA.Domain.Entities.GroupMembership", b =>
-                {
-                    b.HasOne("ChatA.Domain.Entities.GroupMessageRoom", "Room")
-                        .WithMany("Memberships")
+                    b.HasOne("ChatA.Domain.Entities.MessageRoom", "Room")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ChatA.Domain.Entities.User", "User")
-                        .WithMany("GroupMemberships")
+                        .WithMany("Memberships")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -156,27 +134,14 @@ namespace ChatA.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ChatA.Domain.Entities.User", "Sender")
-                        .WithMany("Messages")
-                        .HasForeignKey("SenderId");
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("ChatA.Domain.Entities.IndividualMessageRoom", b =>
-                {
-                    b.HasOne("ChatA.Domain.Entities.User", "FirstUser")
-                        .WithMany("FirstIndividualMessageRooms")
-                        .HasForeignKey("FirstUserId");
-
-                    b.HasOne("ChatA.Domain.Entities.User", "SecondUser")
-                        .WithMany("SecondIndividualMessageRooms")
-                        .HasForeignKey("SecondUserId");
-
-                    b.Navigation("FirstUser");
-
-                    b.Navigation("SecondUser");
                 });
 
             modelBuilder.Entity("ChatA.Domain.Entities.MessageRoom", b =>
@@ -185,17 +150,6 @@ namespace ChatA.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("ChatA.Domain.Entities.User", b =>
-                {
-                    b.Navigation("FirstIndividualMessageRooms");
-
-                    b.Navigation("GroupMemberships");
-
-                    b.Navigation("Messages");
-
-                    b.Navigation("SecondIndividualMessageRooms");
-                });
-
-            modelBuilder.Entity("ChatA.Domain.Entities.GroupMessageRoom", b =>
                 {
                     b.Navigation("Memberships");
                 });

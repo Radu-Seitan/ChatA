@@ -1,10 +1,13 @@
 ﻿using ChatA.Domain.Common;
+using ChatA.Domain.Enums;
 using System.Collections.Generic;
 
 namespace ChatA.Domain.Entities
 {
-    public abstract class MessageRoom : BaseEntity
+    public class MessageRoom : BaseEntity
     {
+        public string Name { get; set; }
         public List<Message> Messages { get; set; }
+        public RoomType Type { get; set; }
     }
 }

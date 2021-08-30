@@ -7,6 +7,20 @@ namespace ChatA.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "MessageRooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageRooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -20,53 +34,24 @@ namespace ChatA.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MessageRooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SecondUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessageRooms", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MessageRooms_Users_FirstUserId",
-                        column: x => x.FirstUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MessageRooms_Users_SecondUserId",
-                        column: x => x.SecondUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GroupMemberships",
+                name: "Memberships",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: false),
-                    GroupMessageRoomId = table.Column<int>(type: "int", nullable: true),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupMemberships", x => new { x.UserId, x.RoomId });
+                    table.PrimaryKey("PK_Memberships", x => new { x.UserId, x.RoomId });
                     table.ForeignKey(
-                        name: "FK_GroupMemberships_MessageRooms_GroupMessageRoomId",
-                        column: x => x.GroupMessageRoomId,
+                        name: "FK_Memberships_MessageRooms_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "MessageRooms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GroupMemberships_Users_UserId",
+                        name: "FK_Memberships_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -79,8 +64,8 @@ namespace ChatA.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -97,23 +82,13 @@ namespace ChatA.Infrastructure.Migrations
                         column: x => x.SenderId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupMemberships_GroupMessageRoomId",
-                table: "GroupMemberships",
-                column: "GroupMessageRoomId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MessageRooms_FirstUserId",
-                table: "MessageRooms",
-                column: "FirstUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MessageRooms_SecondUserId",
-                table: "MessageRooms",
-                column: "SecondUserId");
+                name: "IX_Memberships_RoomId",
+                table: "Memberships",
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RoomId",
@@ -129,7 +104,7 @@ namespace ChatA.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GroupMemberships");
+                name: "Memberships");
 
             migrationBuilder.DropTable(
                 name: "Messages");
