@@ -8,11 +8,12 @@ namespace ChatA.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<GroupMembership> builder)
         {
-            builder.HasKey(t => new
+            builder.HasKey(g => new
             {
-                t.UserId,
-                t.RoomId
+                g.UserId,
+                g.RoomId
             });
+            builder.Property(g => g.Role).IsRequired();
         }
     }
 }
