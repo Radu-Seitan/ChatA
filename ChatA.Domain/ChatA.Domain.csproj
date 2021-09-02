@@ -8,7 +8,4 @@
     <Folder Include="Exceptions\" />
   </ItemGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>
