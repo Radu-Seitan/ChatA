@@ -21,7 +21,7 @@ namespace ChatA.Infrastructure.Repositories
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<User>> SearchUsers(string searchUsername)
+        public async Task<IEnumerable<User>> SearchUsers(string searchUsername = "")
         {
             return await _appDbContext.Users.Where(u => u.Username.Contains(searchUsername)).ToListAsync();
         }
