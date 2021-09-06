@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChatA.Infrastructure.Repositories
 {
-    class MessageRoomRepository : IMessageRoomRepository
+    public class MessageRoomRepository : IMessageRoomRepository
     {
         private readonly AppDbContext _appDbContext;
         public MessageRoomRepository(AppDbContext appDbContext)
@@ -89,12 +89,12 @@ namespace ChatA.Infrastructure.Repositories
             }
 
             var searhedForExistingRoom = await _appDbContext.MessageRooms.
-                Where(m => m.Name.Equals($"{firstUser.Username} & {secondUser.Username}") ||
-                m.Name.Equals($"{firstUser.Username} & {secondUser.Username}")).ToListAsync();
+                Where(m => m.Name.Equals($"{firstUser.Username} & {secondUser.Username}") && m.Type == RoomType.Individual)
+                .ToListAsync();
 
-            if(searhedForExistingRoom is not null)
+            if(searhedForExistingRoom.Count() != 0)
             {
-                throw new IndividualMessageRoomAlreadyExistsException("A message room already exists with the two users");
+                throw new BadRequestException("A message room already exists with the two users");
             }
 
             MessageRoom messageRoom = new()
