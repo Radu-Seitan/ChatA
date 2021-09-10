@@ -1,5 +1,8 @@
 using ChatA.Application;
+using ChatA.Application.Common.Interfaces;
+using ChatA.Infrastructure;
 using ChatA.Infrastructure.Persistence;
+using ChatA.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,10 +27,12 @@ namespace ChatA.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            services.AddInfrastructure(Configuration);
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+            services.AddHttpContextAccessor();
+            
             services.AddControllers();
 
             // In production, the React files will be served from this directory

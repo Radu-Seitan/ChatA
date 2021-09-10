@@ -25,7 +25,7 @@ namespace ChatA.Application.Common.Behaviors
             {
                 var requestName = typeof(TRequest).Name;
 
-                _logger.LogError(ex, "CleanArchitecture Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                _logger.LogError(ex, "ChatA Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
                 throw;
             }

@@ -9,5 +9,6 @@ namespace ChatA.Domain.Entities
         public string Name { get; set; }
         public List<Message> Messages { get; set; }
         public RoomType Type { get; set; }
+        public List<Membership> Memberships { get; set; }
     }
 }

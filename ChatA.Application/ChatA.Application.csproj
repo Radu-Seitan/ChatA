@@ -10,6 +10,12 @@
 
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
+    <Folder Include="MessageRooms\Commands\" />
+    <Folder Include="MessageRooms\Queries\" />
+    <Folder Include="Messages\Commands\" />
+    <Folder Include="Messages\Queries\" />
+    <Folder Include="Users\Commands\" />
+    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
