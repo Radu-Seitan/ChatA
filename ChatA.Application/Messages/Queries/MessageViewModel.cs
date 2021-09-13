@@ -8,7 +8,7 @@ namespace ChatA.Application.Messages.Queries
     public class MessageViewModel :IMapFrom<Message>
     {
         public int Id { get; set; }
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
         public string Username { get; set; }
         public void Mapping(Profile profile)
         {

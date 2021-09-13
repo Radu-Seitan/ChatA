@@ -20,9 +20,9 @@ namespace ChatA.Infrastructure.Repositories
             {
                 throw new NotFoundException("User cannot be found");
             }
-            if(text is null || text is "")
+            if(string.IsNullOrWhiteSpace(text))
             {
-                throw new EmptyMessageException("Message content cannot be empty");
+                throw new BadRequestException("Message content cannot be empty");
             }
             var message = new Message()
             {
