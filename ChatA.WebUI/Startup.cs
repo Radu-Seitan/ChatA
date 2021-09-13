@@ -1,4 +1,8 @@
+using ChatA.Application;
+using ChatA.Application.Common.Interfaces;
+using ChatA.Infrastructure;
 using ChatA.Infrastructure.Persistence;
+using ChatA.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,10 +26,13 @@ namespace ChatA.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+            services.AddHttpContextAccessor();
+            
             services.AddControllers();
 
             // In production, the React files will be served from this directory

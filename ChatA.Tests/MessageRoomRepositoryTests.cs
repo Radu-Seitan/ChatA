@@ -166,42 +166,5 @@ namespace ChatA.Tests
                 await Assert.ThrowsAsync<BadRequestException>(() => repository.CreateIndividualMessageRoom(user1.Id, user2.Id));
             }
         }
-
-        [Fact]
-        public async void CreateMessage_CreatesMessage()
-        {
-            using(var context = _factory.Create())
-            {
-                //Arrange
-                var user = new User
-                {
-                    Id = "1",
-                    Email = "user@user.com",
-                    Memberships = new(),
-                    Username = "test user"
-                };
-
-                var repository = new MessageRoomRepository(context);
-                await new UserRepository(context).CreateUser(user);
-                await repository.CreateGroupMessageRoom(user.Id, "test room");
-                var room = context.Memberships.FirstOrDefault(p => p.UserId == user.Id && p.Role == MembershipRole.Owner && p.Room.Name == "test room").Room;
-
-                var message = new Message()
-                {
-                    Id = 1,
-                    RoomId = room.Id,
-                    Room = room,
-                    SenderId = user.Id,
-                    Sender = user,
-                    Text = "This is a test message"
-                };
-
-                //Act
-                await repository.CreateMessage(message);
-
-                //Assert
-                Assert.Contains(message, context.Messages.ToList());
-            }
-        }
     }
 }

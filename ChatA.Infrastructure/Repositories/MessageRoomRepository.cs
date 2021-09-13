@@ -88,8 +88,10 @@ namespace ChatA.Infrastructure.Repositories
                 throw new NotFoundException("User cannot be found");
             }
 
-            var searhedForExistingRoom = await _appDbContext.MessageRooms.
-                Where(m => m.Name.Equals($"{firstUser.Username} & {secondUser.Username}") && m.Type == RoomType.Individual)
+            var userIds = new List<string> { firstUserId, secondUserId };
+            var searhedForExistingRoom = await _appDbContext.MessageRooms
+                .Include(m => m.Memberships)
+                .Where(m => m.Type == RoomType.Individual && m.Memberships.Select(mx => mx.UserId).All(id => userIds.Contains(id)))
                 .ToListAsync();
 
             if(searhedForExistingRoom.Count() != 0)
@@ -130,11 +132,6 @@ namespace ChatA.Infrastructure.Repositories
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task CreateMessage(Message message)
-        {
-            await _appDbContext.Messages.AddAsync(message);
-            await _appDbContext.SaveChangesAsync();
-        }
 
         public async Task<IEnumerable<MessageRoom>> GetMessageRooms(string userId)
         {
@@ -145,17 +142,6 @@ namespace ChatA.Infrastructure.Repositories
             }
 
             return  await _appDbContext.Memberships.Where(m => m.User.Equals(user)).Select(m => m.Room).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Message>> GetMessages(int messageRoomId)
-        {
-            var room = await _appDbContext.MessageRooms.FindAsync(messageRoomId);
-            if (room is null)
-            {
-                throw new NotFoundException("Room cannot be found");
-            }
-
-            return room.Messages;
         }
     }
 }
