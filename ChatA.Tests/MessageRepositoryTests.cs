@@ -112,7 +112,7 @@ namespace ChatA.Tests
 
 
                 //Assert
-                await Assert.ThrowsAsync<EmptyMessageException>(() => new MessageRepository(context).CreateMessage(user.Id, room.Id, ""));
+                await Assert.ThrowsAsync<BadRequestException>(() => new MessageRepository(context).CreateMessage(user.Id, room.Id, ""));
             }
         }
     }
