@@ -1,9 +1,13 @@
 import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import JSONPretty from 'react-json-pretty';
+import { useState } from 'react';
+
 
 const Profile = () => {
-    const {user, isAuthenticated} = useAuth0();
+    const {user, isAuthenticated, getIdTokenClaims} = useAuth0();
+    const [token, setToken] = useState("");
+    getIdTokenClaims().then(e => setToken(e.__raw));
+    console.log(token);
     return (
         isAuthenticated && (
             <div>
