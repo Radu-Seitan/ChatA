@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ChatA.Application.Users.Commands
 {
-    public class CreateUserCommand : IRequest<string>
+    public class CreateUserCommand : IRequest<Unit>
     {
         public string Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
     }
 
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 
@@ -23,7 +23,7 @@ namespace ChatA.Application.Users.Commands
         {
             _userRepository = userRepository;
         }
-        public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User
             {
@@ -34,7 +34,7 @@ namespace ChatA.Application.Users.Commands
             };
 
             await _userRepository.CreateUser(user);
-            return user.Id;
+            return Unit.Value;
         }
     }
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>

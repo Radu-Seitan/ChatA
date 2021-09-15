@@ -42,7 +42,9 @@ namespace ChatA.WebUI
                 options.Authority = "https://dev-chata.eu.auth0.com/";
                 options.Audience = "https://localhost:5001";
             });
-        
+
+            services.AddSwaggerGen();
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -72,12 +74,22 @@ namespace ChatA.WebUI
 
             app.UseAuthentication();
 
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ChatA 1.0");
+            });
+
 
             app.UseSpa(spa =>
             {
