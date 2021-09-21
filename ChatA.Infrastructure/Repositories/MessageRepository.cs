@@ -14,7 +14,7 @@ namespace ChatA.Infrastructure.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task CreateMessage(string senderId, int roomId, string text)
+        public async Task<Message> CreateMessage(string senderId, int roomId, string text)
         {
             if(senderId is null)
             {
@@ -32,6 +32,7 @@ namespace ChatA.Infrastructure.Repositories
             };
             await _appDbContext.Messages.AddAsync(message);
             await _appDbContext.SaveChangesAsync();
+            return message;
         }
 
         public async Task<IEnumerable<Message>> GetMessages(int messageRoomId)

@@ -15,6 +15,7 @@ namespace ChatA.Application.MessageRooms.Commands
     public class AddUserToGroupMessageRoomCommandHandler : IRequestHandler<AddUserToGroupMessageRoomCommand,Unit>
     {
         private readonly IMessageRoomRepository _messageRoomRepository;
+        private readonly INotifier<AddUserToGroupMessageRoomCommand> _notifier;
         public AddUserToGroupMessageRoomCommandHandler(IMessageRoomRepository messageRoomRepository)
         {
             _messageRoomRepository = messageRoomRepository;
@@ -23,6 +24,7 @@ namespace ChatA.Application.MessageRooms.Commands
         public async Task<Unit> Handle(AddUserToGroupMessageRoomCommand request, CancellationToken cancellationToken)
         {
             await _messageRoomRepository.AddUserToGroupMessageRoom(request.RoomId, request.UserId);
+            await _notifier.Notify(request);
             return Unit.Value;
         }
     }
