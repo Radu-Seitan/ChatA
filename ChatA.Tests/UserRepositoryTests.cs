@@ -84,7 +84,7 @@ namespace ChatA.Tests
                 Assert.Contains(user1, res1);
                 Assert.Contains(user2, res1);
                 Assert.Equal(2, res1.Count());
-                Assert.Equal(3, res2.Count());
+                Assert.Equal(6, res2.Count());
             }
         }
     }
