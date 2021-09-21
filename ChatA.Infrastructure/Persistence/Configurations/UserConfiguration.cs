@@ -16,7 +16,8 @@ namespace ChatA.Infrastructure.Persistence.Configurations
                 .HasMaxLength(40)
                 .IsRequired();
             builder.HasData(
-                new User { Email = "raducseitan@gmail.com", Id = "google-oauth2|109835840698705157612", Username = "Radu Seitan" },
+                new User { Email = "raducseitan@gmail.com", Id = "google-oauth2|109835840698705157612", Username = "Radu Seitan" }
+                //new User { Email = "raducseitan@gmail.com", Id = "google-oauth2|109835840698705157612", Username = "Radu Seitan" }
                 );
         }
     }
