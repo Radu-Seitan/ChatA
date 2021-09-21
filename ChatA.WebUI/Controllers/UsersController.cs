@@ -1,6 +1,7 @@
 ﻿using ChatA.Application.Users.Commands;
 using ChatA.Application.Users.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ChatA.WebUI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> PostUser([FromBody] CreateUserCommand command)
         {
             await _mediator.Send(command);
@@ -32,6 +33,7 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(UserViewModel),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ActionResult<UserViewModel>> GetUser([FromRoute] string id)
         {
             var query = new GetSingleUserQuery { Id = id };
@@ -43,7 +45,8 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsers([FromRoute] SearchAllUsersQuery query)
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsers([FromBody] SearchAllUsersQuery query)
         {
             var users = await _mediator.Send(query);
             return users is null ? NotFound() : Ok(users);
