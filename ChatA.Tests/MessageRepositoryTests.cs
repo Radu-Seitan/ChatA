@@ -73,7 +73,7 @@ namespace ChatA.Tests
                 await userRepository.CreateUser(user2);
                 await roomRepository.CreateGroupMessageRoom(user1.Id, "test room");
                 var room = context.Memberships.FirstOrDefault(p => p.UserId == user1.Id && p.Role == MembershipRole.Owner && p.Room.Name == "test room").Room;
-                await roomRepository.AddUserToGroupMessageRoom(room.Id, user2.Id);
+                await roomRepository.AddUserToGroupMessageRoom(room.Id, user2.Id,user1.Id);
 
                 var messageRepository = new MessageRepository(context);
 

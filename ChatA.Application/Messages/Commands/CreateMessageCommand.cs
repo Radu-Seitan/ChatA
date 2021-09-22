@@ -1,4 +1,5 @@
-﻿using ChatA.Application.Common.Interfaces;
+﻿using ChatA.Application.Common.Events;
+using ChatA.Application.Common.Interfaces;
 using FluentValidation;
 using MediatR;
 using System.Threading;
@@ -16,15 +17,22 @@ namespace ChatA.Application.Messages.Commands
     public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, Unit>
     {
         private readonly IMessageRepository _messageRepository;
-        private readonly INotifier<CreateMessageCommand> _notifier;
-        public CreateMessageCommandHandler(IMessageRepository messageRepository)
+        private readonly INotifier<MessageCreatedEvent> _notifier;
+        public CreateMessageCommandHandler(IMessageRepository messageRepository, INotifier<MessageCreatedEvent> notifier)
         {
             _messageRepository = messageRepository;
+            _notifier = notifier;
         }
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
             await _messageRepository.CreateMessage(request.SenderId, request.RoomId, request.Text);
-            await _notifier.Notify(request);
+            var @event = new MessageCreatedEvent
+            {
+                SenderId = request.SenderId,
+                RoomId = request.RoomId,
+                Text = request.Text
+            };
+            await _notifier.Notify(@event);
             return Unit.Value;
         }
     }

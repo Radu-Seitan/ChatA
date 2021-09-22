@@ -1,6 +1,8 @@
 using ChatA.Application;
+using ChatA.Application.Common.Events;
 using ChatA.Application.Common.Interfaces;
 using ChatA.Infrastructure;
+using ChatA.WebUI.Filters;
 using ChatA.WebUI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -29,9 +31,15 @@ namespace ChatA.WebUI
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
+            services.AddScoped<INotifier<UserAddedToGroupMessageRoomEvent>, SignalRNotifier<UserAddedToGroupMessageRoomEvent>>();
+            services.AddScoped<INotifier<MessageCreatedEvent>, SignalRNotifier<MessageCreatedEvent>>();
+
             services.AddHttpContextAccessor();
             
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(ApiExceptionFilter));
+            });
 
             services.AddAuthentication(options =>
             {
