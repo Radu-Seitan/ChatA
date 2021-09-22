@@ -17,7 +17,7 @@ namespace ChatA.Infrastructure.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task AddUserToGroupMessageRoom(int roomId, string userId)
+        public async Task AddUserToGroupMessageRoom(int roomId, string userId, string ownerId)
         {
             var roomToBeAdded = await _appDbContext.MessageRooms.FindAsync(roomId);
             if(roomToBeAdded is null)
@@ -42,6 +42,11 @@ namespace ChatA.Infrastructure.Repositories
 
             await _appDbContext.Memberships.AddAsync(membership);
             await _appDbContext.SaveChangesAsync();
+        }
+        public async Task<bool> IsOwner(int roomId, string userId)
+        {
+            var membership =  await _appDbContext.Memberships.FindAsync(userId,roomId);
+            return membership.Role == MembershipRole.Owner;
         }
 
         public async Task CreateGroupMessageRoom(string ownerId, string name)

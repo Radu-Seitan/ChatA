@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ChatA.WebUI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MessagesController : ControllerBase
     {
         private readonly IMediator _mediator;

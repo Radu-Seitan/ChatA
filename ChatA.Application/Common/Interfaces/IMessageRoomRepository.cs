@@ -10,6 +10,7 @@ namespace ChatA.Application.Common.Interfaces
         Task CreateIndividualMessageRoom(string firstUserId, string secondUserId);
         Task CreateGroupMessageRoom(string ownerId, string name);
         Task<IEnumerable<MessageRoom>> GetMessageRooms(string userId);
-        Task AddUserToGroupMessageRoom(int roomId, string userId);
+        Task AddUserToGroupMessageRoom(int roomId, string userId, string ownerId);
+        Task<bool> IsOwner(int roomId, string userId);
     }
 }

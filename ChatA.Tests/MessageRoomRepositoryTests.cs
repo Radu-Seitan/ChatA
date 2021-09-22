@@ -76,7 +76,7 @@ namespace ChatA.Tests
                 var membership = context.Memberships.FirstOrDefault(p => p.UserId == user1.Id && p.Role == MembershipRole.Owner && p.Room.Name == "test room");
                 var room = membership.Room;
 
-                await repository.AddUserToGroupMessageRoom(room.Id, user2.Id);
+                await repository.AddUserToGroupMessageRoom(room.Id, user2.Id,user1.Id);
                 var membership2 = context.Memberships.FirstOrDefault(p => p.UserId == user2.Id && p.Role == MembershipRole.Default && p.Room.Name == "test room");
 
                 //Assert

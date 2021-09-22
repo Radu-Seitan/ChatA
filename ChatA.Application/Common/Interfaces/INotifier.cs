@@ -4,6 +4,6 @@ namespace ChatA.Application.Common.Interfaces
 {
     public interface INotifier<T>
     {
-        Task Notify(T eventToNotifyAbout);
+        Task Notify(T @event);
     }
 }
