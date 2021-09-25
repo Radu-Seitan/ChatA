@@ -13,7 +13,7 @@ namespace ChatA.Application.Users.Queries
 {
     public class SearchAllUsersQuery : IRequest<IEnumerable<UserViewModel>>
     {
-        public string SearchedUsername { get; set; }
+        public string SearchedUsername { get; set; } = "";
     }
 
     public class SearchAllUsersQueryHandler : IRequestHandler<SearchAllUsersQuery, IEnumerable<UserViewModel>>
@@ -27,8 +27,8 @@ namespace ChatA.Application.Users.Queries
         }
         public async Task<IEnumerable<UserViewModel>> Handle(SearchAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _userRepository.SearchUsers(request.SearchedUsername) as IQueryable;
-            return users.ProjectTo<UserViewModel>(_mapper.ConfigurationProvider);
+            var users = await _userRepository.SearchUsers(request.SearchedUsername);
+            return _mapper.Map<IEnumerable<UserViewModel>>(users);
         }
     }
 
