@@ -13,6 +13,7 @@ namespace ChatA.WebUI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class MessagesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,7 +27,6 @@ namespace ChatA.WebUI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize]
         public async Task<ActionResult> PostMessage([FromBody] CreateMessageModel messageModel)
         {
             var command = new CreateMessageCommand { 
@@ -42,7 +42,6 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(IEnumerable<MessageViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<MessageViewModel>>> GetMessages([FromRoute] int id)
         {
             var query = new GetAllMessagesQuery { MessageRoomId = id }; 

@@ -3,6 +3,7 @@ using ChatA.Application.Common.Events;
 using ChatA.Application.Common.Interfaces;
 using ChatA.Infrastructure;
 using ChatA.WebUI.Filters;
+using ChatA.WebUI.Hubs;
 using ChatA.WebUI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,8 @@ namespace ChatA.WebUI
             services.AddScoped<INotifier<UserAddedToGroupMessageRoomEvent>, SignalRNotifier<UserAddedToGroupMessageRoomEvent>>();
             services.AddScoped<INotifier<MessageCreatedEvent>, SignalRNotifier<MessageCreatedEvent>>();
 
+            services.AddSignalR();
+
             services.AddHttpContextAccessor();
             
             services.AddControllers(options =>
@@ -48,7 +51,7 @@ namespace ChatA.WebUI
             }).AddJwtBearer(options =>
             {
                 options.Authority = "https://dev-chata.eu.auth0.com/";
-                options.Audience = "https://localhost:5001";
+                options.Audience = "Ya88uquxtux9xgw3uZimsuoXLwDAt5Pk";
             });
 
             services.AddSwaggerGen();
@@ -86,6 +89,7 @@ namespace ChatA.WebUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");

@@ -27,8 +27,8 @@ namespace ChatA.Application.Messages.Queries
 
         public async Task<IEnumerable<MessageViewModel>> Handle(GetAllMessagesQuery request, CancellationToken cancellationToken)
         {
-            var messages =  await _messageRepository.GetMessages(request.MessageRoomId) as IQueryable;
-            return messages.ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider);
+            var messages =  await _messageRepository.GetMessages(request.MessageRoomId);
+            return _mapper.Map<IEnumerable<MessageViewModel>>(messages);
         }
     }
 }
