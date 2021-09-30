@@ -1,6 +1,6 @@
 const MyMessage = () => {
     return (
-        <div>
+        <div className="my-message">
             MyMessage
         </div>
     );

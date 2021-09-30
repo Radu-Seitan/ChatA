@@ -1,22 +1,52 @@
-* {
-  margin: 0;
-  border: 0;
-  box-sizing: border-box;
-}
-
-body {
-  padding: 2rem;
-}
-
 button {
   margin: 2rem 0;
   padding: 1rem 2rem;
-  width: 120px;
+  width: 7.5rem;
   cursor: pointer;
-  border: 1px solid
+  border: 0.0625rem solid;
 }
 
 img {
-  width: 120px;
-  padding: 2px;
+  width: 7.5rem;
+  padding: 0.125rem;
+}
+.profile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.user-rooms {
+  width: 25%;
+  height: 100%;
+  border: 0.0625rem solid;
+}
+.chat-feed {
+  width: 50%;
+  height: 100%;
+  border: 0.0625rem solid;
+}
+
+.room-details {
+  width: 25%;
+  height: 100%;
+  border: 0.0625rem solid;
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+html,
+body,
+div[id="root"] {
+  height: 100% !important;
 }

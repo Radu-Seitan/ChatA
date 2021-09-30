@@ -1,18 +1,22 @@
 import MessageForm from "./MessageForm";
 import MyMessage from "./MyMessage";
 import TheirMessage from "./TheirMessage";
+import RoomHeader from "./RoomHeader";
 
-const ChatFeed = ({props}) => {
-    const { chats, activeChat, userName, messages } = props;
+const ChatFeed = () => {
 
-    const chat = chats && chats[activeChat];
-
-    console.log(chat, userName, messages);
 
     return (
-        <div>
+        <div className="chat-feed">
+            <RoomHeader/>
             ChatFeed
-        </div>);
+            <TheirMessage/>
+            <TheirMessage/>
+            <MyMessage/>
+            <TheirMessage/>
+            <MessageForm />
+        </div>
+    );
 }
 
 export default ChatFeed;

@@ -12,9 +12,9 @@ namespace ChatA.WebUI.Hubs
             _mediator = mediator;
         }
 
-        public async Task JoinRoom(string roomName)
+        public async Task JoinRoom(int roomId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
         }
         public override async Task OnConnectedAsync()
         {
