@@ -1,3 +1,20 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+html,
+body,
+div[id="root"] {
+  height: 100% !important;
+}
+
 button {
   margin: 2rem 0;
   padding: 1rem 2rem;
@@ -26,6 +43,8 @@ img {
   width: 50%;
   height: 100%;
   border: 0.0625rem solid;
+  color: rgb(167, 158, 25);
+  background-color: black;
 }
 
 .room-details {
@@ -34,19 +53,24 @@ img {
   border: 0.0625rem solid;
 }
 
-* {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
+.message-room {
+  border: 0.0625rem solid;
+  background-color: rgb(167, 158, 25);
+  font-size: 1.5625rem;
+  padding-left: 0.625rem;
+}
+.message-room-type {
+  font-size: 0.9375rem;
 }
 
-body {
-  margin: 0;
+.message-room:hover {
+  box-shadow: 0.3125rem 0.625rem 0.5rem 0.625rem rgb(0, 0, 0);
 }
 
-html,
-body,
-div[id="root"] {
-  height: 100% !important;
+.user-ui-header {
+  padding-left: 20px;
+}
+
+.search-button {
+  padding: 0.125rem;
 }

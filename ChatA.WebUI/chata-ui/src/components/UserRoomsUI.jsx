@@ -3,13 +3,14 @@ import MessageRoomList from "./MessageRoomList";
 import CreateGroupRoom from "./CreateGroupRoom";
 import LogoutButton from "./LogoutButton";
 
-const UserRoomsUI = ({ props }) => {
+const UserRoomsUI = ({ handleSelectedRoom }) => {
   return (
     <div className="user-rooms">
-      <SearchBar />
-      <CreateGroupRoom />
-      UserRoomUI
-      <MessageRoomList props={props} />
+      <div className="user-ui-header">
+        <SearchBar />
+        <CreateGroupRoom />
+      </div>
+      <MessageRoomList handleSelectedRoom={handleSelectedRoom} />
       <LogoutButton />
     </div>
   );

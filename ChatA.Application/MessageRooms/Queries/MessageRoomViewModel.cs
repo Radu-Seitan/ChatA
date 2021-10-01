@@ -8,6 +8,7 @@ namespace ChatA.Application.MessageRooms.Queries
 {
     public class MessageRoomViewModel : IMapFrom<MessageRoom>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<MessageViewModel> Messages { get; set; }
         public RoomType Type { get; set; }

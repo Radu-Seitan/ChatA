@@ -1,26 +1,37 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axiosInstance from "../utils/axios";
 import MessageRoom from "./MessageRoom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-const MessageRoomList = ({ props }) => {
+const MessageRoomList = ({ handleSelectedRoom }) => {
   const { user } = useAuth0();
-  const [state, setstate] = useState();
+  const [messageRooms, setMessageRooms] = useState([]);
 
-  const getMessageRooms = async () => {
+  const getMessageRooms = useCallback(async () => {
     const res = await axiosInstance.get(`api/messagerooms/${user.sub}`);
-    setstate(res.data);
-  };
+    setMessageRooms(res.data);
+  }, [user]);
 
-  console.log(user.sub);
-  if (!state) getMessageRooms();
-  console.log(state);
+  const renderMessageRooms = useCallback(() => {
+    return messageRooms.map((value, index) => {
+      return (
+        <MessageRoom
+          key={`message-room - ${value} - ${index}`}
+          id={value.id}
+          handleSelectedRoom={handleSelectedRoom}
+          title={value.name}
+          type={value.type}
+        />
+      );
+    });
+  }, [messageRooms, handleSelectedRoom]);
+
+  if (!messageRooms.length) getMessageRooms();
+  console.log(messageRooms);
+
   return (
     <div className="message-room-list">
-      MessageRoomList
-      <MessageRoom />
-      <MessageRoom />
-      <MessageRoom />
+      {messageRooms.length > 0 && renderMessageRooms()}
     </div>
   );
 };
