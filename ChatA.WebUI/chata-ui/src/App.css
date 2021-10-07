@@ -68,9 +68,12 @@ img {
 }
 
 .user-ui-header {
-  padding-left: 20px;
 }
 
 .search-button {
   padding: 0.125rem;
+}
+
+.create-group-room {
+  border: 0.0625rem solid;
 }

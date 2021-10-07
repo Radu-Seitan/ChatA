@@ -1,8 +1,22 @@
+import axiosInstance from "../utils/axios";
+
 const CreateGroupRoom = () => {
-    return (
-        <div className="create-group-room">
-            CreateGroupRoom
-        </div>
-    );
-}
+  const createRoom = () => {
+    await axiosInstance;
+  };
+
+  return (
+    <div className="create-group-room">
+      <form name="create-group-room-form" /*onSubmit={handleSubmit}*/>
+        <input
+          type="text"
+          id="group-name"
+          placeholder="Name the group"
+          name="name-group-room"
+        />
+        <input type="submit" value="Create group" />
+      </form>
+    </div>
+  );
+};
 export default CreateGroupRoom;
