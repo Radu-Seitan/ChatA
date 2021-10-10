@@ -37,14 +37,15 @@ img {
 .user-rooms {
   width: 25%;
   height: 100%;
-  border: 0.0625rem solid;
 }
 .chat-feed {
   width: 50%;
   height: 100%;
-  border: 0.0625rem solid;
   color: rgb(167, 158, 25);
   background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .room-details {
@@ -54,10 +55,11 @@ img {
 }
 
 .message-room {
-  border: 0.0625rem solid;
-  background-color: rgb(167, 158, 25);
+  background-color: #eb5e55;
   font-size: 1.5625rem;
   padding-left: 0.625rem;
+  color: #000000;
+  border-top: 0.0625rem solid;
 }
 .message-room-type {
   font-size: 0.9375rem;
@@ -68,6 +70,7 @@ img {
 }
 
 .user-ui-header {
+  padding-top: 5px;
 }
 
 .search-button {
@@ -75,5 +78,14 @@ img {
 }
 
 .create-group-room {
-  border: 0.0625rem solid;
+  padding-top: 0.625rem;
+  display: flex;
+  orientation: row;
+  justify-content: space-evenly;
+}
+
+.search-user {
+  display: flex;
+  orientation: row;
+  justify-content: space-evenly;
 }

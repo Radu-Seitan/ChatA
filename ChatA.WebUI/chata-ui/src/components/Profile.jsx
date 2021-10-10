@@ -15,10 +15,6 @@ const Profile = () => {
     localStorage.setItem("token", e.__raw);
   });
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    axiosInstance.get("api/users").then((e) => console.log(e.data));
-  }, [isAuthenticated]);
   console.log(selectedRoom);
   return (
     isAuthenticated && (

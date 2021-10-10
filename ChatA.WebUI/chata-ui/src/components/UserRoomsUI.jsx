@@ -1,15 +1,12 @@
 import SearchBar from "./SearchBar";
 import MessageRoomList from "./MessageRoomList";
-import CreateGroupRoom from "./CreateGroupRoom";
+import UserUIHeader from "./UserUIHeader";
 import LogoutButton from "./LogoutButton";
 
 const UserRoomsUI = ({ handleSelectedRoom }) => {
   return (
     <div className="user-rooms">
-      <div className="user-ui-header">
-        <SearchBar />
-        <CreateGroupRoom />
-      </div>
+      <UserUIHeader />
       <MessageRoomList handleSelectedRoom={handleSelectedRoom} />
       <LogoutButton />
     </div>

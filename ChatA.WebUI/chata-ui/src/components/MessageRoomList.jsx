@@ -2,10 +2,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axiosInstance from "../utils/axios";
 import MessageRoom from "./MessageRoom";
 import { useCallback, useState } from "react";
+import List from "@mui/material/List";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles(() => ({
+  container: {
+    backgroundColor: "#edeba0",
+    paddingTop: "0px",
+  },
+}));
 
 const MessageRoomList = ({ handleSelectedRoom }) => {
   const { user } = useAuth0();
   const [messageRooms, setMessageRooms] = useState([]);
+  const styles = useStyles();
 
   const getMessageRooms = useCallback(async () => {
     const res = await axiosInstance.get(`api/messagerooms/${user.sub}`);
@@ -27,12 +37,11 @@ const MessageRoomList = ({ handleSelectedRoom }) => {
   }, [messageRooms, handleSelectedRoom]);
 
   if (!messageRooms.length) getMessageRooms();
-  console.log(messageRooms);
 
   return (
-    <div className="message-room-list">
+    <List className={styles.container}>
       {messageRooms.length > 0 && renderMessageRooms()}
-    </div>
+    </List>
   );
 };
 
