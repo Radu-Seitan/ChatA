@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axiosInstance from "../utils/axios";
 import MessageRoom from "./MessageRoom";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import List from "@mui/material/List";
 import { makeStyles } from "@mui/styles";
 
@@ -36,7 +36,9 @@ const MessageRoomList = ({ handleSelectedRoom }) => {
     });
   }, [messageRooms, handleSelectedRoom]);
 
-  if (!messageRooms.length) getMessageRooms();
+  useEffect(() => {
+    if (!messageRooms.length) getMessageRooms();
+  }, [messageRooms]);
 
   return (
     <List className={styles.container}>

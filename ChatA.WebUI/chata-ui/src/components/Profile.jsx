@@ -15,7 +15,6 @@ const Profile = () => {
     localStorage.setItem("token", e.__raw);
   });
 
-  console.log(selectedRoom);
   return (
     isAuthenticated && (
       <>

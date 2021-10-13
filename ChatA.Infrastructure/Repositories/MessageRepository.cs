@@ -2,6 +2,7 @@
 using ChatA.Application.Common.Interfaces;
 using ChatA.Domain.Entities;
 using ChatA.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace ChatA.Infrastructure.Repositories
 
         public async Task<IEnumerable<Message>> GetMessages(int messageRoomId)
         {
-            var room = await _appDbContext.MessageRooms.FindAsync(messageRoomId);
+            var room = await _appDbContext.MessageRooms.Include(r =>r.Messages).ThenInclude(m => m.Sender).FirstOrDefaultAsync(r => r.Id == messageRoomId);
             if (room is null)
             {
                 throw new NotFoundException("Room cannot be found");

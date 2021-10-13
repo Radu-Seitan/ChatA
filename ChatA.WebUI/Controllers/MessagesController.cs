@@ -13,7 +13,6 @@ namespace ChatA.WebUI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class MessagesController : ControllerBase
     {
         private readonly IMediator _mediator;

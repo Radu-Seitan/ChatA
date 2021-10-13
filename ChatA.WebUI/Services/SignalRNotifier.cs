@@ -7,7 +7,7 @@ namespace ChatA.WebUI.Services
     {
         public Task Notify(T @event)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }
