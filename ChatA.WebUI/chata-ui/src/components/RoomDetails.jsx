@@ -1,11 +1,10 @@
 import SearchBar from "./SearchBar";
 import PeopleInRoom from "./PeopleInRoom";
 
-const RoomDetails = () => {
+const RoomDetails = ({ selectedRoom }) => {
   return (
     <div className="room-details">
-      <PeopleInRoom />
-      RoomDetails Add user to group room
+      <PeopleInRoom selectedRoom={selectedRoom} />
       <SearchBar />
     </div>
   );

@@ -15,7 +15,6 @@ const ChatFeed = ({ selectedRoom, title }) => {
 
   const getMessages = async () => {
     const res = await axiosInstance.get(`api/messages/${selectedRoom}`);
-    console.log(res);
     setMessages(res.data);
   };
 
