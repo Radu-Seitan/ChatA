@@ -4,17 +4,16 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
   container: {
-    backgroundColor: "#edeba0",
     paddingTop: "0.625rem",
   },
 }));
 
-const UserUIHeader = () => {
+const UserUIHeader = ({ setRerender, rerender }) => {
   const styles = useStyles();
   return (
     <div className={styles.container}>
-      <SearchBar />
-      <CreateGroupRoom />
+      <SearchBar setRerender={setRerender} rerender={rerender} />
+      <CreateGroupRoom setRerender={setRerender} rerender={rerender} />
     </div>
   );
 };

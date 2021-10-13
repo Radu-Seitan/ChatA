@@ -11,10 +11,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const User = ({ user, selectUser }) => {
+const User = ({ user, selectUser, setOpen }) => {
   const styles = useStyles();
   return (
-    <ListItem onClick={() => selectUser(user)} className={styles.conatiner}>
+    <ListItem
+      onClick={() => {
+        selectUser(user);
+        setOpen(false);
+      }}
+      className={styles.conatiner}
+    >
       <ListItemIcon>
         <PersonIcon />
       </ListItemIcon>

@@ -6,9 +6,18 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SmsIcon from "@mui/icons-material/Sms";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const MessageRoom = ({ id, handleSelectedRoom, title, type }) => {
+const MessageRoom = ({
+  id,
+  handleSelectedRoom,
+  title,
+  type,
+  setSelectedTitle,
+}) => {
   const { user } = useAuth0();
-  const onClick = () => handleSelectedRoom(id);
+  const onClick = () => {
+    handleSelectedRoom(id);
+    setSelectedTitle(title);
+  };
   const renderRoomType = () => {
     if (type === 1) return "Group chat";
     else return "Direct Message";

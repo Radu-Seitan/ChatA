@@ -12,17 +12,24 @@ const Hr = styled.hr`
   orientation: row;
 `;
 
-const CreateGroupRoom = () => {
+const CreateGroupRoom = ({ rerender, setRerender }) => {
   const [name, setName] = useState("");
   const createRoom = async () => {
     const res = await axiosInstance.post(`api/messagerooms/group`, {
       name: name,
     });
+    setRerender(!rerender);
   };
 
   return (
     <div className="create-group-room">
-      <form name="create-group-room-form" onSubmit={createRoom}>
+      <form
+        name="create-group-room-form"
+        onSubmit={(e) => {
+          createRoom();
+          e.preventDefault();
+        }}
+      >
         <TextField
           id="group-name"
           label="Name the group"

@@ -11,11 +11,7 @@ const TheirMessage = ({ message }) => {
 
   const sender = `Sent by ${message.sentBy} at ${time} on ${date}`;
   return (
-    <ListItem
-      className="my-message"
-      alignItems="flex-start"
-      sx={{ backgroundColor: "#edeba0" }}
-    >
+    <ListItem className="my-message" alignItems="flex-start">
       <ListItemText primary={text} secondary={sender} />
     </ListItem>
   );

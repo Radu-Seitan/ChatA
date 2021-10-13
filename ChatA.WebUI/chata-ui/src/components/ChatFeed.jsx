@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { List } from "@mui/material";
 
-const ChatFeed = ({ selectedRoom }) => {
+const ChatFeed = ({ selectedRoom, title }) => {
   const { user } = useAuth0();
   const [messages, setMessages] = useState([]);
 
@@ -29,23 +29,46 @@ const ChatFeed = ({ selectedRoom }) => {
     return messages.map((value, index) => {
       if (value.sentBy === user.name)
         return (
-          <MyMessage key={`message - ${value} - ${index}`} message={value} />
+          <MyMessage
+            key={`message - ${value} - ${index}`}
+            message={value}
+            className="message"
+          />
         );
       else
         return (
-          <TheirMessage key={`message - ${value} - ${index}`} message={value} />
+          <TheirMessage
+            key={`message - ${value} - ${index}`}
+            message={value}
+            className="message"
+          />
         );
     });
   }, [messages]);
 
-  console.log(selectedRoom);
-  console.log(messages);
+  const renderHeader = () => {
+    return <RoomHeader title={title} />;
+  };
   return (
-    <Box className="chat-feed">
-      <List sx={{ maxHeight: "calc(100%-3.5rem)", overflow: "auto" }}>
-        {messages.length > 0 && renderMessages()}
-      </List>
-      <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
+    <Box
+      className="chat-feed"
+      sx={{
+        borderLeft: "0.0625rem solid black",
+        borderRight: "0.0625rem solid black",
+      }}
+    >
+      {renderHeader()}
+      <Box>
+        <List
+          sx={{
+            maxHeight: "calc(100%-5.5rem)",
+            overflow: "auto",
+          }}
+        >
+          {messages.length > 0 && renderMessages()}
+        </List>
+        <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
+      </Box>
     </Box>
   );
 };

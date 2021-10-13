@@ -1,9 +1,7 @@
+import { Box } from "@mui/system";
+
 const PeopleInRoom = () => {
-    return (
-        <div className="people-in-room">
-            People In Room
-        </div>
-    );
-}
+  return <Box className="people-in-room">People In Room</Box>;
+};
 
 export default PeopleInRoom;

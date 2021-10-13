@@ -7,12 +7,17 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
   container: {
-    backgroundColor: "#edeba0",
-    paddingTop: "0px",
+    paddingTop: "0rem",
+    borderLeft: "0.0625rem",
   },
 }));
 
-const MessageRoomList = ({ handleSelectedRoom }) => {
+const MessageRoomList = ({
+  handleSelectedRoom,
+  rerender,
+  setRerender,
+  setSelectedTitle,
+}) => {
   const { user } = useAuth0();
   const [messageRooms, setMessageRooms] = useState([]);
   const styles = useStyles();
@@ -31,10 +36,15 @@ const MessageRoomList = ({ handleSelectedRoom }) => {
           handleSelectedRoom={handleSelectedRoom}
           title={value.name}
           type={value.type}
+          setSelectedTitle={setSelectedTitle}
         />
       );
     });
-  }, [messageRooms, handleSelectedRoom]);
+  }, [messageRooms]);
+
+  useEffect(() => {
+    getMessageRooms();
+  }, [rerender]);
 
   useEffect(() => {
     if (!messageRooms.length) getMessageRooms();

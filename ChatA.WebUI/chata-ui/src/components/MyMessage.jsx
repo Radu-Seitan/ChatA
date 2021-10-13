@@ -7,13 +7,14 @@ const MyMessage = ({ message }) => {
   const created = message.created.split("T");
   const time = created[1].substr(0, 5);
   const date = created[0].split("-").reverse().join("-");
-  console.log(created);
   const sender = `Sent by ${message.sentBy} at ${time} on ${date}`;
   return (
     <ListItem
       className="my-message"
       alignItems="flex-start"
-      sx={{ backgroundColor: "#a79e19" }}
+      sx={{
+        borderBottom: "1px solid grey",
+      }}
     >
       <ListItemText primary={text} secondary={sender} />
     </ListItem>

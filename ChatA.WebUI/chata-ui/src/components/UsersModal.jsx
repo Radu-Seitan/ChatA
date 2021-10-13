@@ -24,6 +24,7 @@ const UsersModal = ({ open, setOpen, users, selectUser }) => {
           key={`user-${value}-${index}`}
           user={value}
           selectUser={selectUser}
+          setOpen={setOpen}
         />
       );
     });

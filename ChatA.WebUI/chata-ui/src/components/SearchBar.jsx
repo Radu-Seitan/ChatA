@@ -4,8 +4,9 @@ import { useState } from "react";
 import axiosInstance from "../utils/axios";
 import UsersModal from "./UsersModal";
 import { useEffect } from "react";
+import { render } from "react-dom";
 
-const SearchBar = () => {
+const SearchBar = ({ setRerender, rerender }) => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState();
   const [user, selectUser] = useState();
@@ -20,6 +21,7 @@ const SearchBar = () => {
     const res = await axiosInstance.post(`api/messagerooms/individual`, {
       secondUserId: user.id,
     });
+    setRerender(!render);
   };
 
   const renderModal = () => {
@@ -30,6 +32,8 @@ const SearchBar = () => {
           setOpen={setOpen}
           users={users}
           selectUser={selectUser}
+          setRerender={setRerender}
+          rerender={rerender}
         />
       );
   };

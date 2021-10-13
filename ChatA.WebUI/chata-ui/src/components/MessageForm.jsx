@@ -31,6 +31,7 @@ const MessageForm = ({ selectedRoom, getMessages }) => {
         backgroundColor: "white",
         width: "100%",
         marginTop: "auto",
+        position: "static",
       }}
     >
       <TextField

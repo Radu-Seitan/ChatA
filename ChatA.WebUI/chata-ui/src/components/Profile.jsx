@@ -10,6 +10,7 @@ import { useState } from "react";
 const Profile = () => {
   const { user, isAuthenticated, getIdTokenClaims } = useAuth0();
   const [selectedRoom, setSelectedRoom] = useState();
+  const [title, setSelectedTitle] = useState("");
 
   getIdTokenClaims().then((e) => {
     localStorage.setItem("token", e.__raw);
@@ -19,8 +20,11 @@ const Profile = () => {
     isAuthenticated && (
       <>
         <div className="profile">
-          <UserRoomsUI handleSelectedRoom={setSelectedRoom} />
-          <ChatFeed selectedRoom={selectedRoom} />
+          <UserRoomsUI
+            handleSelectedRoom={setSelectedRoom}
+            setSelectedTitle={setSelectedTitle}
+          />
+          <ChatFeed selectedRoom={selectedRoom} title={title} />
           <RoomDetails selectedRoom={selectedRoom} />
         </div>
       </>
