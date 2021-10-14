@@ -8,12 +8,14 @@ namespace ChatA.Application.Messages.Queries
     public class MessageViewModel :IMapFrom<Message>
     {
         public int Id { get; set; }
-        public DateTimeOffset Created { get; set; }
-        public string Username { get; set; }
+        public DateTime Created { get; set; }
+        public string SentBy { get; set; }
+        public string Text { get; set; }
+        public int RoomId { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Message, MessageViewModel>()
-                .ForMember(d => d.Username,opt => opt.MapFrom(m => m.Sender.Username));
+                .ForMember(d => d.SentBy,opt => opt.MapFrom(m => m.Sender.Username));
         }
     }
 }

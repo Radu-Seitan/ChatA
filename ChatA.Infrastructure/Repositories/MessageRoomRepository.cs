@@ -45,7 +45,10 @@ namespace ChatA.Infrastructure.Repositories
         }
         public async Task<bool> IsOwner(int roomId, string userId)
         {
-            var membership =  await _appDbContext.Memberships.FindAsync(userId,roomId);
+            var membership =  await _appDbContext.Memberships
+                .Include(m => m.User)
+                .ThenInclude(m => m.Memberships)
+                .FirstOrDefaultAsync(m => m.UserId == userId && m.RoomId == roomId);
             return membership.Role == MembershipRole.Owner;
         }
 
