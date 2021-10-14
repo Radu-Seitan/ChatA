@@ -1,7 +1,6 @@
 import { ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { ListItemText } from "@mui/material";
-import { Box } from "@mui/system";
 
 const TheirMessage = ({ message }) => {
   const text = message.text;
@@ -11,7 +10,14 @@ const TheirMessage = ({ message }) => {
 
   const sender = `Sent by ${message.sentBy} at ${time} on ${date}`;
   return (
-    <ListItem className="my-message" alignItems="flex-start">
+    <ListItem
+      className="my-message"
+      sx={{
+        borderBottom: "1px solid grey",
+        width: "fit-content",
+        justifyContent: "flex-start",
+      }}
+    >
       <ListItemText primary={text} secondary={sender} />
     </ListItem>
   );

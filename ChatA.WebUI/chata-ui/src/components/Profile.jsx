@@ -6,9 +6,10 @@ import UserRoomsUI from "./UserRoomsUI";
 import ChatFeed from "./ChatFeed";
 import RoomDetails from "./RoomDetails";
 import { useState } from "react";
+import { Box } from "@mui/system";
 
 const Profile = () => {
-  const { user, isAuthenticated, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [selectedRoom, setSelectedRoom] = useState();
   const [title, setSelectedTitle] = useState("");
 
@@ -18,16 +19,14 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-      <>
-        <div className="profile">
-          <UserRoomsUI
-            handleSelectedRoom={setSelectedRoom}
-            setSelectedTitle={setSelectedTitle}
-          />
-          <ChatFeed selectedRoom={selectedRoom} title={title} />
-          <RoomDetails selectedRoom={selectedRoom} />
-        </div>
-      </>
+      <Box className="profile">
+        <UserRoomsUI
+          handleSelectedRoom={setSelectedRoom}
+          setSelectedTitle={setSelectedTitle}
+        />
+        <ChatFeed selectedRoom={selectedRoom} title={title} />
+        <RoomDetails selectedRoom={selectedRoom} />
+      </Box>
     )
   );
 };

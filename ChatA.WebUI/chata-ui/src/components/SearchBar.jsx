@@ -51,6 +51,7 @@ const SearchBar = ({ setRerender, rerender }) => {
             setOpen(true);
             e.preventDefault();
           }}
+          style={{ display: "flex", gap: "10px", alignItems: "center" }}
         >
           <TextField
             id="header-search"

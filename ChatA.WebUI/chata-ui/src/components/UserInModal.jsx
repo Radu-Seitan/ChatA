@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const User = ({ user, selectUser, setOpen }) => {
+const UserInModal = ({ user, selectUser, setOpen }) => {
   const styles = useStyles();
   return (
     <ListItem
@@ -29,4 +29,4 @@ const User = ({ user, selectUser, setOpen }) => {
   );
 };
 
-export default User;
+export default UserInModal;

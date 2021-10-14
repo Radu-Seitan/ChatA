@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import User from "./User";
+import UserInModal from "./UserInModal";
 
 const style = {
   position: "absolute",
@@ -20,7 +20,7 @@ const UsersModal = ({ open, setOpen, users, selectUser }) => {
   const renderUsers = () => {
     return users.map((value, index) => {
       return (
-        <User
+        <UserInModal
           key={`user-${value}-${index}`}
           user={value}
           selectUser={selectUser}

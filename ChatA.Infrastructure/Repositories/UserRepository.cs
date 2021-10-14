@@ -34,7 +34,7 @@ namespace ChatA.Infrastructure.Repositories
         public async Task<IEnumerable<User>> GetUsersInRoom(int roomId)
         {
             var room = await _appDbContext.MessageRooms.FindAsync(roomId);
-            return await _appDbContext.Users.Where(u => u.Memberships.Where(m => m.Room == room).ToList().Count() == 1).ToListAsync();
+            return await _appDbContext.Users.Include(u => u.Memberships).Where(u => u.Memberships.Where(m => m.Room == room).Count() == 1).ToListAsync();
         }
     }
 }

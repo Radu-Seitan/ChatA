@@ -29,6 +29,7 @@ const CreateGroupRoom = ({ rerender, setRerender }) => {
           createRoom();
           e.preventDefault();
         }}
+        style={{ display: "flex", gap: "10px", alignItems: "center" }}
       >
         <TextField
           id="group-name"

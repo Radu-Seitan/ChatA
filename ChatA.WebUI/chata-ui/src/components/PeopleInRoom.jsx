@@ -14,12 +14,14 @@ const PeopleInRoom = ({ selectedRoom }) => {
       setUsers(res.data);
     }
   };
-  console.log(users);
-  useEffect(() => {
-    if (!users.length > 0) getUsersInRoom();
-  }, [users]);
 
-  return <Box className="people-in-room">People In Room</Box>;
+  useEffect(() => {
+    getUsersInRoom();
+  }, [selectedRoom]);
+
+  console.log(users);
+
+  return <Box className="people-in-room"></Box>;
 };
 
 export default PeopleInRoom;

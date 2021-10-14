@@ -1,6 +1,7 @@
 import { ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { ListItemText } from "@mui/material";
+import { format } from "date-fns";
 
 const MyMessage = ({ message }) => {
   const text = message.text;
@@ -11,9 +12,10 @@ const MyMessage = ({ message }) => {
   return (
     <ListItem
       className="my-message"
-      alignItems="flex-start"
       sx={{
         borderBottom: "1px solid grey",
+        width: "fit-content",
+        justifyContent: "flex-end",
       }}
     >
       <ListItemText primary={text} secondary={sender} />

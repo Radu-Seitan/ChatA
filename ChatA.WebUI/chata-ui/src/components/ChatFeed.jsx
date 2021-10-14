@@ -34,20 +34,16 @@ const ChatFeed = ({ selectedRoom, title }) => {
             className="message"
           />
         );
-      else
-        return (
-          <TheirMessage
-            key={`message - ${value} - ${index}`}
-            message={value}
-            className="message"
-          />
-        );
+      return (
+        <TheirMessage
+          key={`message - ${value} - ${index}`}
+          message={value}
+          className="message"
+        />
+      );
     });
   }, [messages]);
 
-  const renderHeader = () => {
-    return <RoomHeader title={title} />;
-  };
   return (
     <Box
       className="chat-feed"
@@ -56,18 +52,16 @@ const ChatFeed = ({ selectedRoom, title }) => {
         borderRight: "0.0625rem solid black",
       }}
     >
-      {renderHeader()}
-      <Box>
-        <List
-          sx={{
-            maxHeight: "calc(100%-5.5rem)",
-            overflow: "auto",
-          }}
-        >
-          {messages.length > 0 && renderMessages()}
-        </List>
-        <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
-      </Box>
+      <RoomHeader title={title} />
+      <List
+        sx={{
+          maxHeight: "calc(100%-5.5rem)",
+          overflow: "auto",
+        }}
+      >
+        {messages.length > 0 && renderMessages()}
+      </List>
+      <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
     </Box>
   );
 };

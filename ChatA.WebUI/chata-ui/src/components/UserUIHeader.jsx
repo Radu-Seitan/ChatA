@@ -4,7 +4,7 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
   container: {
-    paddingTop: "0.625rem",
+    padding: "0.625rem 0",
   },
 }));
 

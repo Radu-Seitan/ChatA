@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace ChatA.WebUI
 {
@@ -52,6 +53,33 @@ namespace ChatA.WebUI
             {
                 options.Authority = "https://dev-chata.eu.auth0.com/";
                 options.Audience = "Ya88uquxtux9xgw3uZimsuoXLwDAt5Pk";
+                options.SaveToken = true;
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/chathub")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("https://localhost:5001")
+                        .AllowCredentials();
+                });
             });
 
             services.AddSwaggerGen();
@@ -81,6 +109,7 @@ namespace ChatA.WebUI
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseCors("ClientPermission");
             app.UseRouting();
 
             app.UseAuthentication();
