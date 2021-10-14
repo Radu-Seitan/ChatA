@@ -4,22 +4,18 @@ import { ListItemText } from "@mui/material";
 import { ListItem } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles(() => ({
-  container: {
-    border: "0.0625rem solid",
-    borderColor: "black",
-  },
-}));
-
 const UserInModal = ({ user, selectUser, setOpen }) => {
-  const styles = useStyles();
   return (
     <ListItem
       onClick={() => {
         selectUser(user);
         setOpen(false);
       }}
-      className={styles.conatiner}
+      sx={{
+        cursor: "pointer",
+        border: "0.0625rem solid grey",
+        borderRadius: "0.625rem",
+      }}
     >
       <ListItemIcon>
         <PersonIcon />

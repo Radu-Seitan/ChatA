@@ -1,15 +1,25 @@
-import SearchBar from "./SearchBar";
 import PeopleInRoom from "./PeopleInRoom";
 import { Box } from "@mui/system";
+import AddUserSearchBar from "./AddUserSearchBar";
+import { useState } from "react";
 
 const RoomDetails = ({ selectedRoom, roomType }) => {
+  const [rerender, setRerender] = useState(false);
+
   const renderSearchBar = () => {
-    if (roomType == 1) return <SearchBar />;
+    if (roomType == 1)
+      return (
+        <AddUserSearchBar
+          selectedRoom={selectedRoom}
+          setRerender={setRerender}
+          rerender={rerender}
+        />
+      );
   };
   return (
     <Box className="room-details">
-      <PeopleInRoom selectedRoom={selectedRoom} />
       {renderSearchBar()}
+      <PeopleInRoom selectedRoom={selectedRoom} rerender={rerender} />
     </Box>
   );
 };

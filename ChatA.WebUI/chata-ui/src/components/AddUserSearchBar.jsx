@@ -4,8 +4,12 @@ import { useState } from "react";
 import axiosInstance from "../utils/axios";
 import UsersModal from "./UsersModal";
 import { useEffect } from "react";
+import { Box } from "@mui/system";
+import { Toolbar } from "@mui/material";
+import { AppBar } from "@material-ui/core";
+import { Typography } from "@mui/material";
 
-const SearchBar = ({ setRerender, rerender }) => {
+const AddUserSearchBar = ({ rerender, setRerender, selectedRoom }) => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState();
   const [user, selectUser] = useState();
@@ -16,9 +20,10 @@ const SearchBar = ({ setRerender, rerender }) => {
     setUsers(res.data);
   };
 
-  const createDirectMessage = async () => {
-    await axiosInstance.post(`api/messagerooms/individual`, {
-      secondUserId: user.id,
+  const addUserToGroup = async () => {
+    await axiosInstance.put(`api/messagerooms`, {
+      roomId: selectedRoom,
+      userId: user.id,
     });
     setRerender(!rerender);
   };
@@ -38,11 +43,22 @@ const SearchBar = ({ setRerender, rerender }) => {
   };
 
   useEffect(() => {
-    if (user) createDirectMessage();
+    if (user) addUserToGroup();
   }, [user]);
+
   return (
-    <>
-      <div className="search-user">
+    <Box>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Add users in room
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        className="search-user"
+        sx={{ paddingTop: "0.625rem", paddingBottom: "0.625rem" }}
+      >
         <form
           name="search-users-form"
           onSubmit={(e) => {
@@ -62,10 +78,10 @@ const SearchBar = ({ setRerender, rerender }) => {
             Search user
           </Button>
         </form>
-      </div>
+      </Box>
       {renderModal()}
-    </>
+    </Box>
   );
 };
 
-export default SearchBar;
+export default AddUserSearchBar;

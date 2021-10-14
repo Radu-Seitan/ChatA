@@ -25,7 +25,7 @@ namespace ChatA.Application.MessageRooms.Commands
 
         public async Task<Unit> Handle(AddUserToGroupMessageRoomCommand request, CancellationToken cancellationToken)
         {
-            var isOwner = await _messageRoomRepository.IsOwner(request.RoomId,request.UserId);
+            var isOwner = await _messageRoomRepository.IsOwner(request.RoomId,request.OwnerId);
             if(!isOwner)
             {
                 throw new BadRequestException();

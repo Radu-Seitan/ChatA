@@ -33,6 +33,7 @@ img {
   flex-wrap: wrap;
   height: 100%;
   overflow-y: hidden;
+  background-color: rgb(232, 240, 254);
 }
 
 .user-rooms {
@@ -45,6 +46,7 @@ img {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: rgb(202, 216, 233);
 }
 
 .room-details {
@@ -63,7 +65,8 @@ img {
 }
 
 .message-room:hover {
-  background-color: #efefef;
+  background-color: #1976d2;
+  color: white;
 }
 
 .user-ui-header {

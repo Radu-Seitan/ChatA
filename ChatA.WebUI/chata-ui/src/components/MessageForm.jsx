@@ -5,6 +5,8 @@ import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { InputAdornment } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -14,7 +16,9 @@ const useStyles = makeStyles(() => ({
 
 const MessageForm = ({ selectedRoom, getMessages }) => {
   const [name, setName] = useState("");
+  const [room, setRoom] = useState(selectedRoom);
   const styles = useStyles();
+  const inputElement = useRef(null);
 
   const sendMessage = async () => {
     if (selectedRoom) {
@@ -22,9 +26,10 @@ const MessageForm = ({ selectedRoom, getMessages }) => {
         text: `${name}`,
         roomId: `${selectedRoom}`,
       });
-      //getMessages();
+      inputElement.current.children[1].children[0].value = null;
     }
   };
+
   return (
     <Box
       sx={{
@@ -35,11 +40,15 @@ const MessageForm = ({ selectedRoom, getMessages }) => {
       }}
     >
       <TextField
+        ref={inputElement}
         label="Send your message"
         id="message-input"
         type="text"
         fullWidth
         onChange={(e) => setName(e.target.value)}
+        onKeyPress={(event) => {
+          if (event.key == "Enter") sendMessage();
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

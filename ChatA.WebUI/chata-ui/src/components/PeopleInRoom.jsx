@@ -4,9 +4,11 @@ import axiosInstance from "../utils/axios";
 import { useEffect } from "react";
 import UserInRoom from "./UserInRoom";
 import { List } from "@mui/material";
-import { useCallback } from "react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import { Typography } from "@mui/material";
 
-const PeopleInRoom = ({ selectedRoom }) => {
+const PeopleInRoom = ({ selectedRoom, rerender }) => {
   const [users, setUsers] = useState([]);
 
   const getUsersInRoom = async () => {
@@ -20,7 +22,7 @@ const PeopleInRoom = ({ selectedRoom }) => {
 
   useEffect(() => {
     getUsersInRoom();
-  }, [selectedRoom]);
+  }, [selectedRoom, rerender]);
 
   const renderUsersInRoom = () => {
     return users.map((value, index) => {
@@ -32,7 +34,18 @@ const PeopleInRoom = ({ selectedRoom }) => {
 
   console.log(users);
 
-  return <List className="people-in-room">{renderUsersInRoom()}</List>;
+  return (
+    <Box>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Users in group chat
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <List className="people-in-room">{renderUsersInRoom()}</List>
+    </Box>
+  );
 };
 
 export default PeopleInRoom;

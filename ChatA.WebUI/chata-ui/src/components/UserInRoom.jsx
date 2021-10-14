@@ -6,7 +6,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const UserInRoom = ({ user }) => {
   return (
-    <ListItem>
+    <ListItem sx={{ cursor: "pointer" }}>
       <ListItemAvatar>
         <Avatar>
           <AccountCircleIcon />

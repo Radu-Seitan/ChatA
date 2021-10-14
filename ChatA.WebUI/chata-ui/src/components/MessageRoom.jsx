@@ -45,7 +45,6 @@ const MessageRoom = ({
       onClick={() => onClick()}
       className="message-room"
       sx={{
-        backgroundColor: id === selectedRoom ? "#ededed" : "#fff",
         cursor: "pointer",
       }}
     >
