@@ -7,15 +7,46 @@ import ChatFeed from "./ChatFeed";
 import RoomDetails from "./RoomDetails";
 import { useState } from "react";
 import { Box } from "@mui/system";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useRef } from "react";
 
 const Profile = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [selectedRoom, setSelectedRoom] = useState();
   const [title, setSelectedTitle] = useState("");
+  const [connection, setConnection] = useState(null);
+  const feedRef = useRef();
 
   getIdTokenClaims().then((e) => {
     localStorage.setItem("token", e.__raw);
   });
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) return;
+    const newConnection = new HubConnectionBuilder()
+      .withUrl("https://localhost:5001/chathub", {
+        accessTokenFactory: () => localStorage.getItem("token"),
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then((result) => {
+          console.log("Connected!");
+
+          connection.on("ReceiveMessage", (message) => {
+            feedRef.current.addMessage(JSON.parse(message));
+          });
+        })
+        .catch((e) => console.log("Connection failed: ", e));
+    }
+  }, [connection]);
 
   return (
     isAuthenticated && (
@@ -24,7 +55,7 @@ const Profile = () => {
           handleSelectedRoom={setSelectedRoom}
           setSelectedTitle={setSelectedTitle}
         />
-        <ChatFeed selectedRoom={selectedRoom} title={title} />
+        <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
         <RoomDetails selectedRoom={selectedRoom} />
       </Box>
     )

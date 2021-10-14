@@ -33,6 +33,7 @@ namespace ChatA.Infrastructure.Repositories
             };
             await _appDbContext.Messages.AddAsync(message);
             await _appDbContext.SaveChangesAsync();
+            message = await _appDbContext.Messages.Include(m => m.Sender).FirstOrDefaultAsync(m => m.Id == message.Id);
             return message;
         }
 

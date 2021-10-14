@@ -11,6 +11,7 @@ namespace ChatA.Application.Messages.Queries
         public DateTime Created { get; set; }
         public string SentBy { get; set; }
         public string Text { get; set; }
+        public int RoomId { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Message, MessageViewModel>()

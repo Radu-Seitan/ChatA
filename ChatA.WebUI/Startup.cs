@@ -1,6 +1,7 @@
 using ChatA.Application;
 using ChatA.Application.Common.Events;
 using ChatA.Application.Common.Interfaces;
+using ChatA.Application.Messages.Queries;
 using ChatA.Infrastructure;
 using ChatA.WebUI.Filters;
 using ChatA.WebUI.Hubs;
@@ -33,8 +34,8 @@ namespace ChatA.WebUI
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-            services.AddScoped<INotifier<UserAddedToGroupMessageRoomEvent>, SignalRNotifier<UserAddedToGroupMessageRoomEvent>>();
-            services.AddScoped<INotifier<MessageCreatedEvent>, SignalRNotifier<MessageCreatedEvent>>();
+            //services.AddScoped<INotifier<UserAddedToGroupMessageRoomEvent>, SignalRNotifier<UserAddedToGroupMessageRoomEvent>>();
+            services.AddScoped<INotifier<MessageViewModel>, MessageSignalRNotifier>();
 
             services.AddSignalR();
 

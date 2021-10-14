@@ -22,7 +22,7 @@ const MessageForm = ({ selectedRoom, getMessages }) => {
         text: `${name}`,
         roomId: `${selectedRoom}`,
       });
-      getMessages();
+      //getMessages();
     }
   };
   return (

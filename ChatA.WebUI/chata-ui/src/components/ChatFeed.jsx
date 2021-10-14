@@ -3,13 +3,14 @@ import MyMessage from "./MyMessage";
 import TheirMessage from "./TheirMessage";
 import RoomHeader from "./RoomHeader";
 import { Box } from "@mui/system";
-import { useCallback, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import axiosInstance from "../utils/axios";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { List } from "@mui/material";
+import { useImperativeHandle } from "react";
 
-const ChatFeed = ({ selectedRoom, title }) => {
+const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
   const { user } = useAuth0();
   const [messages, setMessages] = useState([]);
 
@@ -44,6 +45,12 @@ const ChatFeed = ({ selectedRoom, title }) => {
     });
   }, [messages]);
 
+  useImperativeHandle(ref, () => ({
+    addMessage(message) {
+      setMessages((messages) => [...messages, message]);
+    },
+  }));
+
   return (
     <Box
       className="chat-feed"
@@ -64,6 +71,6 @@ const ChatFeed = ({ selectedRoom, title }) => {
       <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
     </Box>
   );
-};
+});
 
 export default ChatFeed;

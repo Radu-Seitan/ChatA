@@ -18,11 +18,9 @@ namespace ChatA.Application.MessageRooms.Commands
     public class AddUserToGroupMessageRoomCommandHandler : IRequestHandler<AddUserToGroupMessageRoomCommand,Unit>
     {
         private readonly IMessageRoomRepository _messageRoomRepository;
-        private readonly INotifier<UserAddedToGroupMessageRoomEvent> _notifier;
-        public AddUserToGroupMessageRoomCommandHandler(IMessageRoomRepository messageRoomRepository, INotifier<UserAddedToGroupMessageRoomEvent> notifier)
+        public AddUserToGroupMessageRoomCommandHandler(IMessageRoomRepository messageRoomRepository)
         {
             _messageRoomRepository = messageRoomRepository;
-            _notifier = notifier;
         }
 
         public async Task<Unit> Handle(AddUserToGroupMessageRoomCommand request, CancellationToken cancellationToken)
@@ -33,13 +31,6 @@ namespace ChatA.Application.MessageRooms.Commands
                 throw new BadRequestException();
             }
             await _messageRoomRepository.AddUserToGroupMessageRoom(request.RoomId, request.UserId, request.OwnerId);
-            var @event = new UserAddedToGroupMessageRoomEvent
-            {
-                OwnerId = request.OwnerId,
-                RoomId = request.RoomId,
-                UserId = request.UserId
-            };
-            await _notifier.Notify(@event);
             return Unit.Value;
         }
     }
