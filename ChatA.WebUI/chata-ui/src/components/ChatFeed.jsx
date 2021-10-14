@@ -58,6 +58,7 @@ const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
       sx={{
         borderLeft: "0.0625rem solid black",
         borderRight: "0.0625rem solid black",
+        backgroundColor: "rgba(25, 118, 210, 0.1)",
       }}
     >
       <RoomHeader title={title} />
@@ -65,6 +66,10 @@ const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
         sx={{
           maxHeight: "calc(100%-5.5rem)",
           overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "5px",
+          padding: "5px",
         }}
       >
         {messages.length > 0 && renderMessages()}

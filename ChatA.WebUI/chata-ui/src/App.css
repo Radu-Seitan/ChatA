@@ -32,12 +32,13 @@ img {
   flex-direction: row;
   flex-wrap: wrap;
   height: 100%;
-  padding: 0.3125rem;
+  overflow-y: hidden;
 }
 
 .user-rooms {
   width: 25%;
   height: 100%;
+  overflow-y: auto;
 }
 .chat-feed {
   width: 50%;
@@ -49,7 +50,6 @@ img {
 .room-details {
   width: 25%;
   height: 100%;
-  border: 0.0625rem solid;
 }
 
 .message-room {
@@ -63,7 +63,7 @@ img {
 }
 
 .message-room:hover {
-  box-shadow: 0.3125rem 0.625rem 0.5rem 0.625rem rgb(41, 99, 207);
+  background-color: #efefef;
 }
 
 .user-ui-header {

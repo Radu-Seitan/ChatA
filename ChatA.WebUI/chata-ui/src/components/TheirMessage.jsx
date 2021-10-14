@@ -1,6 +1,7 @@
 import { ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { ListItemText } from "@mui/material";
+import { Tooltip } from "@mui/material";
 
 const TheirMessage = ({ message }) => {
   const text = message.text;
@@ -10,17 +11,20 @@ const TheirMessage = ({ message }) => {
 
   const sender = `Sent by ${message.sentBy} at ${time} on ${date}`;
   return (
-    <ListItem
-      className="my-message"
-      sx={{
-        border: "1px solid grey",
-        width: "fit-content",
-        justifyContent: "flex-start",
-        borderRadius: "1.5625rem",
-      }}
-    >
-      <ListItemText primary={text} secondary={sender} />
-    </ListItem>
+    <Tooltip title={sender} placement="right">
+      <ListItem
+        className="my-message"
+        sx={{
+          width: "fit-content",
+          justifyContent: "flex-start",
+          borderRadius: "1rem",
+          backgroundColor: "#eeeeee",
+          border: "1px solid lightgrey",
+        }}
+      >
+        <ListItemText primary={text} />
+      </ListItem>
+    </Tooltip>
   );
 };
 export default TheirMessage;

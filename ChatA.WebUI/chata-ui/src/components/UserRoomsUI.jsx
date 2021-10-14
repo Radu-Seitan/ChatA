@@ -4,7 +4,12 @@ import UserUIHeader from "./UserUIHeader";
 import { Box } from "@mui/system";
 import { useState } from "react";
 
-const UserRoomsUI = ({ handleSelectedRoom, setSelectedTitle, setRoomType }) => {
+const UserRoomsUI = ({
+  handleSelectedRoom,
+  setSelectedTitle,
+  setRoomType,
+  selectedRoom,
+}) => {
   const [rerender, setRerender] = useState(true);
   return (
     <Box className="user-rooms">
@@ -15,6 +20,7 @@ const UserRoomsUI = ({ handleSelectedRoom, setSelectedTitle, setRoomType }) => {
         setRerender={setRerender}
         setSelectedTitle={setSelectedTitle}
         setRoomType={setRoomType}
+        selectedRoom={selectedRoom}
       />
     </Box>
   );

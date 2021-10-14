@@ -9,6 +9,14 @@ const LogoutButton = () => {
       variant="contained"
       className="logout-button"
       onClick={() => logout()}
+      sx={{
+        backgroundColor: "#fff",
+        color: "#1976d2",
+        "&:hover": {
+          backgroundColor: "#eeeeee",
+          borderColor: "#eeeeee",
+        },
+      }}
     >
       Log Out
     </Button>

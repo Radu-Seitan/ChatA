@@ -13,6 +13,7 @@ const MessageRoom = ({
   type,
   setSelectedTitle,
   setRoomType,
+  selectedRoom,
 }) => {
   const { user } = useAuth0();
   const onClick = () => {
@@ -40,7 +41,14 @@ const MessageRoom = ({
     }
   };
   return (
-    <ListItem onClick={() => onClick()} className="message-room">
+    <ListItem
+      onClick={() => onClick()}
+      className="message-room"
+      sx={{
+        backgroundColor: id === selectedRoom ? "#ededed" : "#fff",
+        cursor: "pointer",
+      }}
+    >
       <ListItemIcon>{renderIcon()}</ListItemIcon>
       <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
     </ListItem>

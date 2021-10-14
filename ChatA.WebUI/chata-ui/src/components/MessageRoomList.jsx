@@ -18,6 +18,7 @@ const MessageRoomList = ({
   setRerender,
   setSelectedTitle,
   setRoomType,
+  selectedRoom,
 }) => {
   const { user } = useAuth0();
   const [messageRooms, setMessageRooms] = useState([]);
@@ -30,6 +31,7 @@ const MessageRoomList = ({
 
   const renderMessageRooms = useCallback(() => {
     return messageRooms.map((value, index) => {
+      console.log(value.id, selectedRoom);
       return (
         <MessageRoom
           key={`message-room - ${value} - ${index}`}
@@ -39,6 +41,7 @@ const MessageRoomList = ({
           type={value.type}
           setSelectedTitle={setSelectedTitle}
           setRoomType={setRoomType}
+          selectedRoom={selectedRoom}
         />
       );
     });

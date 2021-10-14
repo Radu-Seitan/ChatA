@@ -56,6 +56,7 @@ const Profile = () => {
           handleSelectedRoom={setSelectedRoom}
           setSelectedTitle={setSelectedTitle}
           setRoomType={setRoomType}
+          selectedRoom={selectedRoom}
         />
         <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
         <RoomDetails selectedRoom={selectedRoom} roomType={roomType} />
