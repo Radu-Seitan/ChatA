@@ -78,7 +78,7 @@ namespace ChatA.WebUI
                 {
                     policy.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("https://localhost:5001")
+                        .WithOrigins("https://chata.azurewebsites.net/")
                         .AllowCredentials();
                 });
             });
