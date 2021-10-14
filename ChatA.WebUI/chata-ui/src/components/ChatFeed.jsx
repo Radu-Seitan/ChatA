@@ -47,7 +47,8 @@ const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
 
   useImperativeHandle(ref, () => ({
     addMessage(message) {
-      setMessages((messages) => [...messages, message]);
+      if (selectedRoom == message.roomId)
+        setMessages((messages) => [...messages, message]);
     },
   }));
 

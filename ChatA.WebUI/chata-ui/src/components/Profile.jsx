@@ -15,6 +15,7 @@ const Profile = () => {
   const [selectedRoom, setSelectedRoom] = useState();
   const [title, setSelectedTitle] = useState("");
   const [connection, setConnection] = useState(null);
+  const [roomType, setRoomType] = useState();
   const feedRef = useRef();
 
   getIdTokenClaims().then((e) => {
@@ -54,9 +55,10 @@ const Profile = () => {
         <UserRoomsUI
           handleSelectedRoom={setSelectedRoom}
           setSelectedTitle={setSelectedTitle}
+          setRoomType={setRoomType}
         />
         <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
-        <RoomDetails selectedRoom={selectedRoom} />
+        <RoomDetails selectedRoom={selectedRoom} roomType={roomType} />
       </Box>
     )
   );

@@ -1,12 +1,16 @@
 import SearchBar from "./SearchBar";
 import PeopleInRoom from "./PeopleInRoom";
+import { Box } from "@mui/system";
 
-const RoomDetails = ({ selectedRoom }) => {
+const RoomDetails = ({ selectedRoom, roomType }) => {
+  const renderSearchBar = () => {
+    if (roomType == 1) return <SearchBar />;
+  };
   return (
-    <div className="room-details">
+    <Box className="room-details">
       <PeopleInRoom selectedRoom={selectedRoom} />
-      <SearchBar />
-    </div>
+      {renderSearchBar()}
+    </Box>
   );
 };
 

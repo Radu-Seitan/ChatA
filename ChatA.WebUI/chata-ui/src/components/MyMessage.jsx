@@ -13,9 +13,10 @@ const MyMessage = ({ message }) => {
     <ListItem
       className="my-message"
       sx={{
-        borderBottom: "1px solid grey",
+        border: "1px solid grey",
         width: "fit-content",
         justifyContent: "flex-end",
+        borderRadius: "1.5625rem",
       }}
     >
       <ListItemText primary={text} secondary={sender} />

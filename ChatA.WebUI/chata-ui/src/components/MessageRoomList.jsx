@@ -17,6 +17,7 @@ const MessageRoomList = ({
   rerender,
   setRerender,
   setSelectedTitle,
+  setRoomType,
 }) => {
   const { user } = useAuth0();
   const [messageRooms, setMessageRooms] = useState([]);
@@ -37,6 +38,7 @@ const MessageRoomList = ({
           title={value.name}
           type={value.type}
           setSelectedTitle={setSelectedTitle}
+          setRoomType={setRoomType}
         />
       );
     });

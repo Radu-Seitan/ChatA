@@ -12,11 +12,13 @@ const MessageRoom = ({
   title,
   type,
   setSelectedTitle,
+  setRoomType,
 }) => {
   const { user } = useAuth0();
   const onClick = () => {
     handleSelectedRoom(id);
     setSelectedTitle(title);
+    setRoomType(type);
   };
   const renderRoomType = () => {
     if (type === 1) return "Group chat";

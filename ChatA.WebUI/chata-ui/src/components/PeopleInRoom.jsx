@@ -2,6 +2,9 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import axiosInstance from "../utils/axios";
 import { useEffect } from "react";
+import UserInRoom from "./UserInRoom";
+import { List } from "@mui/material";
+import { useCallback } from "react";
 
 const PeopleInRoom = ({ selectedRoom }) => {
   const [users, setUsers] = useState([]);
@@ -19,9 +22,17 @@ const PeopleInRoom = ({ selectedRoom }) => {
     getUsersInRoom();
   }, [selectedRoom]);
 
+  const renderUsersInRoom = () => {
+    return users.map((value, index) => {
+      return (
+        <UserInRoom key={`user-in-room - ${value} - ${index}`} user={value} />
+      );
+    });
+  };
+
   console.log(users);
 
-  return <Box className="people-in-room"></Box>;
+  return <List className="people-in-room">{renderUsersInRoom()}</List>;
 };
 
 export default PeopleInRoom;
