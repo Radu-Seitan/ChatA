@@ -29,6 +29,8 @@ const MessageRoomList = ({
     setMessageRooms(res.data);
   }, [user]);
 
+  console.log(messageRooms);
+
   const renderMessageRooms = useCallback(() => {
     return messageRooms.map((value, index) => {
       console.log(value.id, selectedRoom);

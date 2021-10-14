@@ -45,9 +45,6 @@ namespace ChatA.Infrastructure.Repositories
         }
         public async Task<bool> IsOwner(int roomId, string userId)
         {
-            var x = await _appDbContext.Memberships
-                .Include(m => m.User)
-                .ThenInclude(m => m.Memberships).ToListAsync();
             var membership =  await _appDbContext.Memberships
                 .Include(m => m.User)
                 .ThenInclude(m => m.Memberships)
