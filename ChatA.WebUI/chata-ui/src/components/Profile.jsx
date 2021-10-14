@@ -1,39 +1,68 @@
-import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import axiosInstance from "../utils/axios";
+import UserRoomsUI from "./UserRoomsUI";
+import ChatFeed from "./ChatFeed";
+import RoomDetails from "./RoomDetails";
+import { useState } from "react";
+import { Box } from "@mui/system";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useRef } from "react";
 
 const Profile = () => {
-    const {user, isAuthenticated, getIdTokenClaims} = useAuth0();
-    const [token, setToken] = useState("");
-    getIdTokenClaims().then(e => setToken(e.__raw));
+  const { isAuthenticated, getIdTokenClaims } = useAuth0();
+  const [selectedRoom, setSelectedRoom] = useState();
+  const [title, setSelectedTitle] = useState("");
+  const [connection, setConnection] = useState(null);
+  const [roomType, setRoomType] = useState();
+  const feedRef = useRef();
 
-    useEffect(() => {
-        if (!token) return;
-        axios.interceptors.request.use(
-            request => {
-                if(request) {
-                    request.headers['Authorization'] = 'Bearer ' + token;
-                }
-                return request;
-            },
-            error =>{
-                return Promise.reject(error);
-            }
-        );
-        axios.get("api/users").then(e => console.log(e.data));
-    }, [token])
-   
-    return (
-        isAuthenticated && (
-            <div>
-                <img src ={user.picture} alt={user.name} />
-                <h2>{user.name}</h2>
-                <p>{user.email}</p>
-            </div>
-        )
+  getIdTokenClaims().then((e) => {
+    localStorage.setItem("token", e.__raw);
+  });
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) return;
+    const newConnection = new HubConnectionBuilder()
+      .withUrl("https://localhost:5001/chathub", {
+        accessTokenFactory: () => localStorage.getItem("token"),
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then((result) => {
+          console.log("Connected!");
+
+          connection.on("ReceiveMessage", (message) => {
+            feedRef.current.addMessage(JSON.parse(message));
+          });
+        })
+        .catch((e) => console.log("Connection failed: ", e));
+    }
+  }, [connection]);
+
+  return (
+    isAuthenticated && (
+      <Box className="profile">
+        <UserRoomsUI
+          handleSelectedRoom={setSelectedRoom}
+          setSelectedTitle={setSelectedTitle}
+          setRoomType={setRoomType}
+          selectedRoom={selectedRoom}
+        />
+        <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
+        <RoomDetails selectedRoom={selectedRoom} roomType={roomType} />
+      </Box>
     )
-}
+  );
+};
 
-export default Profile
+export default Profile;

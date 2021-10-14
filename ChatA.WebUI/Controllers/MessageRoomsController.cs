@@ -64,7 +64,7 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(IEnumerable<MessageRoomViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<MessageRoomViewModel>>> GetUsers([FromRoute] string id)
+        public async Task<ActionResult<IEnumerable<MessageRoomViewModel>>> GetMessageRooms([FromRoute] string id)
         {
             var query = new GetMessageRoomsQuery { UserId = id };
             var rooms = await _mediator.Send(query);

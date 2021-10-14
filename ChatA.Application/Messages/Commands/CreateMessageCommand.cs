@@ -1,5 +1,7 @@
-﻿using ChatA.Application.Common.Events;
+﻿using AutoMapper;
+using ChatA.Application.Common.Events;
 using ChatA.Application.Common.Interfaces;
+using ChatA.Application.Messages.Queries;
 using FluentValidation;
 using MediatR;
 using System.Threading;
@@ -17,21 +19,19 @@ namespace ChatA.Application.Messages.Commands
     public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, Unit>
     {
         private readonly IMessageRepository _messageRepository;
-        private readonly INotifier<MessageCreatedEvent> _notifier;
-        public CreateMessageCommandHandler(IMessageRepository messageRepository, INotifier<MessageCreatedEvent> notifier)
+        private readonly INotifier<MessageViewModel> _notifier;
+        private readonly IMapper _mapper;
+
+        public CreateMessageCommandHandler(IMessageRepository messageRepository, INotifier<MessageViewModel> notifier, IMapper mapper)
         {
             _messageRepository = messageRepository;
             _notifier = notifier;
+            _mapper = mapper;
         }
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            await _messageRepository.CreateMessage(request.SenderId, request.RoomId, request.Text);
-            var @event = new MessageCreatedEvent
-            {
-                SenderId = request.SenderId,
-                RoomId = request.RoomId,
-                Text = request.Text
-            };
+            var message = await _messageRepository.CreateMessage(request.SenderId, request.RoomId, request.Text);
+            var @event = _mapper.Map<MessageViewModel>(message); 
             await _notifier.Notify(@event);
             return Unit.Value;
         }

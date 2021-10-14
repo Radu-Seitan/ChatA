@@ -8,8 +8,14 @@ namespace ChatA.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<MessageRoom> builder)
         {
-            builder.Property(m => m.Name).HasMaxLength(50).IsRequired();
-            builder.HasMany(m => m.Memberships).WithOne(m => m.Room).HasForeignKey(m => m.RoomId).OnDelete(DeleteBehavior.Cascade).IsRequired();
+            builder.Property(m => m.Name)
+                .HasMaxLength(50)
+                .IsRequired();
+            builder.HasMany(m => m.Memberships)
+                .WithOne(m => m.Room)
+                .HasForeignKey(m => m.RoomId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
         }
     }
 }

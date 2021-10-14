@@ -9,5 +9,7 @@ namespace ChatA.Application.Common.Interfaces
         Task CreateUser(User user);
         Task<IEnumerable<User>> SearchUsers(string searchUsername);
         Task<User> GetUser(string userId);
+
+        Task<IEnumerable<User>> GetUsersInRoom(int roomId);
     }
 }

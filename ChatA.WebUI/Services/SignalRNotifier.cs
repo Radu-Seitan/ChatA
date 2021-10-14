@@ -1,13 +1,17 @@
 ﻿using ChatA.Application.Common.Interfaces;
+using ChatA.WebUI.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
 namespace ChatA.WebUI.Services
 {
-    public class SignalRNotifier<T> : INotifier<T>
+    public abstract class SignalRNotifier<T> : INotifier<T>
     {
-        public Task Notify(T @event)
+        protected readonly IHubContext<ChatHub> HubContext;
+        public SignalRNotifier(IHubContext<ChatHub> hubContext)
         {
-            throw new System.NotImplementedException();
+            HubContext = hubContext;
         }
+        public abstract Task Notify(T @event);
     }
 }
