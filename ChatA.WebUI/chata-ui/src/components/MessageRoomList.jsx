@@ -29,11 +29,8 @@ const MessageRoomList = ({
     setMessageRooms(res.data);
   }, [user]);
 
-  console.log(messageRooms);
-
   const renderMessageRooms = useCallback(() => {
     return messageRooms.map((value, index) => {
-      console.log(value.id, selectedRoom);
       return (
         <MessageRoom
           key={`message-room - ${value} - ${index}`}
@@ -50,12 +47,12 @@ const MessageRoomList = ({
   }, [messageRooms]);
 
   useEffect(() => {
-    getMessageRooms();
-  }, [rerender]);
-
-  useEffect(() => {
     if (!messageRooms.length) getMessageRooms();
   }, [messageRooms]);
+
+  useEffect(() => {
+    getMessageRooms();
+  }, [rerender]);
 
   return (
     <List className={styles.container}>
