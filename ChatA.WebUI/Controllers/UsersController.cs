@@ -11,7 +11,6 @@ namespace ChatA.WebUI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,7 +22,6 @@ namespace ChatA.WebUI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [AllowAnonymous]
         public async Task<ActionResult> PostUser([FromBody] CreateUserCommand command)
         {
             await _mediator.Send(command);
@@ -34,6 +32,7 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(UserViewModel),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ActionResult<UserViewModel>> GetUser([FromRoute] string id)
         {
             var query = new GetSingleUserQuery { Id = id };
@@ -45,6 +44,7 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsers([FromQuery] SearchAllUsersQuery query)
         {
             var users = await _mediator.Send(query);
@@ -55,6 +55,7 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsersInRoom([FromRoute] int roomId)
         {
             var query = new GetUsersInRoomQuery { RoomId = roomId };
