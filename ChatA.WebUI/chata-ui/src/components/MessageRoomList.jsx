@@ -47,7 +47,7 @@ const MessageRoomList = ({
   }, [messageRooms]);
 
   useEffect(() => {
-    if (!messageRooms.length) getMessageRooms();
+    if (!messageRooms.length > 0) getMessageRooms();
   }, [messageRooms]);
 
   useEffect(() => {
