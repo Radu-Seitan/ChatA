@@ -32,8 +32,6 @@ const PeopleInRoom = ({ selectedRoom, rerender }) => {
     });
   };
 
-  console.log(users);
-
   return (
     <Box>
       <AppBar position="static">
