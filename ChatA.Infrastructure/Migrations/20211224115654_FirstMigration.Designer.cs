@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatA.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211014085715_ChangedDateTime")]
-    partial class ChangedDateTime
+    [Migration("20211224115654_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
