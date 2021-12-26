@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ChatA.WebUI.Models
+﻿namespace ChatA.WebUI.Models
 {
     public class CreateGroupMessageRoomModel
     {

@@ -13,5 +13,7 @@ namespace ChatA.Application.Common.Interfaces
         Task AddUserToGroupMessageRoom(int roomId, string userId, string ownerId);
         Task<bool> IsOwner(int roomId, string userId);
         Task DeleteMessageRoom(int roomId);
+        Task LeaveGroupMessageRoom(int roomId, string userId);
+        Task ReplaceOwner(int roomId);
     }
 }

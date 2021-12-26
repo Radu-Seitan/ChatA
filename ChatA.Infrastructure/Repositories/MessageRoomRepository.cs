@@ -164,5 +164,34 @@ namespace ChatA.Infrastructure.Repositories
             await _appDbContext.SaveChangesAsync();
         }
 
+        public async Task LeaveGroupMessageRoom(int roomId, string userId)
+        {
+            var room = await _appDbContext.MessageRooms.FindAsync(roomId);
+            if (room is null)
+            {
+                throw new NotFoundException("Room cannot be found");
+            }
+            var user = await _appDbContext.Users.FindAsync(userId);
+            if (user is null)
+            {
+                throw new NotFoundException("User cannot be found");
+            }
+
+            var membership = await _appDbContext.Memberships.FindAsync(user.Id, room.Id);
+            _appDbContext.Memberships.Remove(membership);
+            await _appDbContext.SaveChangesAsync();
+        }
+        public async Task ReplaceOwner(int roomId)
+        {
+            var newOwnerMembership = await _appDbContext.Memberships.FirstOrDefaultAsync(m => m.RoomId == roomId);
+            if (newOwnerMembership is null)
+            {
+                await DeleteMessageRoom(roomId);
+                return;
+            }
+            newOwnerMembership.Role = MembershipRole.Owner;
+            await _appDbContext.SaveChangesAsync();
+        }
+
     }
 }

@@ -9,8 +9,10 @@ const UserRoomsUI = ({
   setSelectedTitle,
   setRoomType,
   selectedRoom,
+  rerender,
+  setRerender
 }) => {
-  const [rerender, setRerender] = useState(true);
+  
   return (
     <Box className="user-rooms">
       <UserUIHeader rerender={rerender} setRerender={setRerender} />
