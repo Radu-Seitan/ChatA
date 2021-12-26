@@ -16,6 +16,7 @@ const Profile = () => {
   const [title, setSelectedTitle] = useState("");
   const [connection, setConnection] = useState(null);
   const [roomType, setRoomType] = useState();
+  const [rerender, setRerender] = useState(true);
   const feedRef = useRef();
 
   getIdTokenClaims().then((e) => {
@@ -57,9 +58,11 @@ const Profile = () => {
           setSelectedTitle={setSelectedTitle}
           setRoomType={setRoomType}
           selectedRoom={selectedRoom}
+          rerender={rerender}
+          setRerender={setRerender}
         />
         <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
-        <RoomDetails selectedRoom={selectedRoom} roomType={roomType} />
+        <RoomDetails selectedRoom={selectedRoom} roomType={roomType} rerenderRooms={rerender} setRerenderRooms={setRerender}/>
       </Box>
     )
   );
