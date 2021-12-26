@@ -151,5 +151,18 @@ namespace ChatA.Infrastructure.Repositories
 
             return  await _appDbContext.Memberships.Where(m => m.User.Equals(user)).Select(m => m.Room).ToListAsync();
         }
+
+        public async Task DeleteMessageRoom(int roomId)
+        {
+            var room = await _appDbContext.MessageRooms.FindAsync(roomId);
+            if (room is null)
+            {
+                throw new NotFoundException("Room cannot be found");
+            }
+
+            _appDbContext.MessageRooms.Remove(room);
+            await _appDbContext.SaveChangesAsync();
+        }
+
     }
 }

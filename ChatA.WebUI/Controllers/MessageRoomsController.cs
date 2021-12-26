@@ -70,5 +70,19 @@ namespace ChatA.WebUI.Controllers
             var rooms = await _mediator.Send(query);
             return rooms is null ? NotFound() : Ok(rooms);
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteMessageRoom([FromRoute] int id)
+        {
+            var command = new DeleteMessageRoomCommand {
+                RoomId = id,
+                UserId = _currentUserService.UserId
+            };
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }
