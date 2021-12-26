@@ -171,7 +171,7 @@ namespace ChatA.Infrastructure.Repositories
             {
                 throw new NotFoundException("Room cannot be found");
             }
-            var user = await _appDbContext.MessageRooms.FindAsync(userId);
+            var user = await _appDbContext.Users.FindAsync(userId);
             if (user is null)
             {
                 throw new NotFoundException("User cannot be found");
@@ -186,6 +186,7 @@ namespace ChatA.Infrastructure.Repositories
             var newOwnerMembership = await _appDbContext.Memberships.FirstOrDefaultAsync(m => m.RoomId == roomId);
             if (newOwnerMembership is null)
             {
+                await DeleteMessageRoom(roomId);
                 return;
             }
             newOwnerMembership.Role = MembershipRole.Owner;
