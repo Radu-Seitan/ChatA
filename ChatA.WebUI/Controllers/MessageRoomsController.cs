@@ -100,5 +100,22 @@ namespace ChatA.WebUI.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+
+        [HttpPut]
+        [Route("remove")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> RemoveUserFromGroup([FromBody] RemoveUserFromGroupCommandModel commandModel)
+        {
+            var command = new RemoveUserFromGroupCommand
+            {
+                RoomId = commandModel.RoomId,
+                UserId = commandModel.UserId,
+                OwnerId = _currentUserService.UserId
+            };
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }
