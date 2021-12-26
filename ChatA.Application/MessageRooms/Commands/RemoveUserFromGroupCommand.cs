@@ -1,5 +1,6 @@
 ﻿using ChatA.Application.Common.Exceptions;
 using ChatA.Application.Common.Interfaces;
+using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,15 @@ namespace ChatA.Application.MessageRooms.Commands
             }
             await _messageRoomRepository.LeaveGroupMessageRoom(request.RoomId, request.UserId);
             return Unit.Value;
+        }
+    }
+
+    public class RemoveUserFromGroupCommandValidator : AbstractValidator<RemoveUserFromGroupCommand>
+    {
+        public RemoveUserFromGroupCommandValidator()
+        {
+            RuleFor(m => m.RoomId).NotNull();
+            RuleFor(m => m.UserId).NotNull();
         }
     }
 }

@@ -21,7 +21,12 @@ const RoomDetails = ({ selectedRoom, roomType,rerenderRooms,setRerenderRooms }) 
   return (
     <Box className="room-details">
       {renderSearchBar()}
-      <PeopleInRoom selectedRoom={selectedRoom} rerender={rerender} />
+      <PeopleInRoom 
+        selectedRoom={selectedRoom} 
+        rerender={rerender} 
+        roomType={roomType}
+        setRerender={setRerender}
+      />
     </Box>
   );
 };

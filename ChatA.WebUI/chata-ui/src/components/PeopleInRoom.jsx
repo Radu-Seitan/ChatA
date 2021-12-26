@@ -8,7 +8,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Typography } from "@mui/material";
 
-const PeopleInRoom = ({ selectedRoom, rerender }) => {
+const PeopleInRoom = ({ selectedRoom, rerender, roomType, setRerender }) => {
   const [users, setUsers] = useState([]);
 
   const getUsersInRoom = async () => {
@@ -27,7 +27,13 @@ const PeopleInRoom = ({ selectedRoom, rerender }) => {
   const renderUsersInRoom = () => {
     return users.map((value, index) => {
       return (
-        <UserInRoom key={`user-in-room - ${value} - ${index}`} user={value} />
+        <UserInRoom 
+        key={`user-in-room - ${value} - ${index}`} 
+        user={value} 
+        roomType={roomType} 
+        rerender={rerender}
+        setRerender={setRerender}
+        selectedRoom={selectedRoom}/>
       );
     });
   };
