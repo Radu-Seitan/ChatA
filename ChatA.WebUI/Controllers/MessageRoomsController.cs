@@ -75,7 +75,6 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [AllowAnonymous]
         public async Task<ActionResult> DeleteMessageRoom([FromRoute] int id)
         {
             var command = new DeleteMessageRoomCommand {

@@ -4,7 +4,10 @@ import ListItem from "@mui/material/ListItem";
 import MessageIcon from "@mui/icons-material/Message";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SmsIcon from "@mui/icons-material/Sms";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useAuth0 } from "@auth0/auth0-react";
+import axiosInstance from "../utils/axios";
+import { Box } from "@mui/material";
 
 const MessageRoom = ({
   id,
@@ -14,6 +17,8 @@ const MessageRoom = ({
   setSelectedTitle,
   setRoomType,
   selectedRoom,
+  setRerender,
+  rerender
 }) => {
   const { user } = useAuth0();
   const onClick = () => {
@@ -40,17 +45,30 @@ const MessageRoom = ({
       else return array[0];
     }
   };
+
+  const deleteMessageRoom = async () => {
+    const res = await axiosInstance.delete(`api/MessageRooms/${id}`);
+    setRerender(!rerender);
+  }
+
+   const renderBin = () => {
+    if(type === 1) return <DeleteOutlineIcon fontSize='medium'onClick={() => deleteMessageRoom()}/>
+    else return <></>
+  }
+
   return (
-    <ListItem
-      onClick={() => onClick()}
-      className="message-room"
-      sx={{
-        cursor: "pointer",
-      }}
-    >
-      <ListItemIcon>{renderIcon()}</ListItemIcon>
-      <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
-    </ListItem>
+      <ListItem
+        className="message-room"
+        sx={{
+          cursor: "pointer",
+        }}
+      >
+        <ListItem onClick={() => onClick()}>
+          <ListItemIcon>{renderIcon()}</ListItemIcon>
+          <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
+        </ListItem>
+        {renderBin()}
+      </ListItem>
   );
 };
 

@@ -41,6 +41,8 @@ const MessageRoomList = ({
           setSelectedTitle={setSelectedTitle}
           setRoomType={setRoomType}
           selectedRoom={selectedRoom}
+          rerender={rerender}
+          setRerender={setRerender}
         />
       );
     });
