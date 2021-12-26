@@ -25,7 +25,7 @@ const Profile = () => {
   useEffect(() => {
     if (!localStorage.getItem("token")) return;
     const newConnection = new HubConnectionBuilder()
-      .withUrl("https://chata.azurewebsites.net/chathub", {
+      .withUrl("https://localhost:5001/chathub", {
         accessTokenFactory: () => localStorage.getItem("token"),
       })
       .withAutomaticReconnect()

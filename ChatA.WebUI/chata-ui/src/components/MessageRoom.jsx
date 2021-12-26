@@ -52,15 +52,21 @@ const MessageRoom = ({
   }
 
    const renderBin = () => {
-    if(type === 1) return <DeleteOutlineIcon fontSize='medium'onClick={() => deleteMessageRoom()}/>
+    if(type === 1) return <DeleteOutlineIcon 
+        fontSize='medium' 
+        sx={{marginTop: "27.5px", marginRight:"20px"}} 
+        onClick={() => deleteMessageRoom()}
+      />
     else return <></>
   }
 
   return (
-      <ListItem
+      <Box
         className="message-room"
         sx={{
           cursor: "pointer",
+          display:"flex",
+          flexDirection:"row"
         }}
       >
         <ListItem onClick={() => onClick()}>
@@ -68,7 +74,7 @@ const MessageRoom = ({
           <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
         </ListItem>
         {renderBin()}
-      </ListItem>
+      </Box>
   );
 };
 
