@@ -84,5 +84,21 @@ namespace ChatA.WebUI.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+
+        [HttpPut]
+        [Route("leave/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> LeaveGroup([FromRoute] int id)
+        {
+            var command = new LeaveGroupMessageRoomCommand
+            {
+                RoomId = id,
+                UserId = _currentUserService.UserId
+            };
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }
