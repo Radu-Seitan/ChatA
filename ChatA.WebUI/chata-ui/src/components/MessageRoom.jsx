@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import MessageIcon from "@mui/icons-material/Message";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SmsIcon from "@mui/icons-material/Sms";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useAuth0 } from "@auth0/auth0-react";
 import axiosInstance from "../utils/axios";
 import { Box } from "@mui/material";
@@ -18,7 +18,7 @@ const MessageRoom = ({
   setRoomType,
   selectedRoom,
   setRerender,
-  rerender
+  rerender,
 }) => {
   const { user } = useAuth0();
   const onClick = () => {
@@ -49,32 +49,35 @@ const MessageRoom = ({
   const leaveMessageRoom = async () => {
     await axiosInstance.put(`api/MessageRooms/leave/${id}`);
     setRerender(!rerender);
-  }
+  };
 
-   const renderLeave = () => {
-    if(type === 1) return <ExitToAppIcon 
-        fontSize='medium' 
-        sx={{marginTop: "27.5px", marginRight:"20px"}} 
-        onClick={() => leaveMessageRoom()}
-      />
-    else return <></>
-  }
+  const renderLeave = () => {
+    if (type === 1)
+      return (
+        <ExitToAppIcon
+          fontSize="medium"
+          sx={{ marginTop: "27.5px", marginRight: "20px" }}
+          onClick={() => leaveMessageRoom()}
+        />
+      );
+    else return <></>;
+  };
 
   return (
-      <Box
-        className="message-room"
-        sx={{
-          cursor: "pointer",
-          display:"flex",
-          flexDirection:"row"
-        }}
-      >
-        <ListItem onClick={() => onClick()}>
-          <ListItemIcon>{renderIcon()}</ListItemIcon>
-          <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
-        </ListItem>
-        {renderLeave()}
-      </Box>
+    <Box
+      className="message-room"
+      sx={{
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <ListItem onClick={() => onClick()}>
+        <ListItemIcon>{renderIcon()}</ListItemIcon>
+        <ListItemText primary={checkTitle()} secondary={renderRoomType()} />
+      </ListItem>
+      {renderLeave()}
+    </Box>
   );
 };
 
