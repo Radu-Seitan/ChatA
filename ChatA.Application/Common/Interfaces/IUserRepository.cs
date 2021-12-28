@@ -11,5 +11,6 @@ namespace ChatA.Application.Common.Interfaces
         Task<User> GetUser(string userId);
 
         Task<IEnumerable<User>> GetUsersInRoom(int roomId);
+        Task ChangeUserDetails(string userId, string username, string email);
     }
 }

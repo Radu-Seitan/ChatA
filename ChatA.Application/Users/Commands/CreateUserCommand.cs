@@ -2,7 +2,6 @@
 using ChatA.Domain.Entities;
 using FluentValidation;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

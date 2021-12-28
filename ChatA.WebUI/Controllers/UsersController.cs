@@ -1,5 +1,7 @@
-﻿using ChatA.Application.Users.Commands;
+﻿using ChatA.Application.Common.Interfaces;
+using ChatA.Application.Users.Commands;
 using ChatA.Application.Users.Queries;
+using ChatA.WebUI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +16,11 @@ namespace ChatA.WebUI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UsersController(IMediator mediator)
+        private readonly ICurrentUserService _currentUserService;
+        public UsersController(IMediator mediator, ICurrentUserService currentUserService)
         {
             _mediator = mediator;
+            _currentUserService = currentUserService;
         }
 
         [HttpPost]
@@ -61,6 +65,23 @@ namespace ChatA.WebUI.Controllers
             var query = new GetUsersInRoomQuery { RoomId = roomId };
             var users = await _mediator.Send(query);
             return users is null ? NotFound() : Ok(users);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
+        public async Task<ActionResult> ChangeUserDetails([FromBody] ChangeUserDetailsCommandModel commandModel)
+        {
+            var command = new ChangeUserDetailsCommand
+            {          
+                Username = commandModel.Username,
+                Email = commandModel.Email,
+                UserId = _currentUserService.UserId
+            };
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

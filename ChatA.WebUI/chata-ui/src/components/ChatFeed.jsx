@@ -10,7 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { List } from "@mui/material";
 import { useImperativeHandle } from "react";
 
-const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
+const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
   const { user } = useAuth0();
   const [messages, setMessages] = useState([]);
 
@@ -61,7 +61,7 @@ const ChatFeed = forwardRef(({ selectedRoom, title }, ref) => {
         backgroundColor: "rgba(25, 118, 210, 0.1)",
       }}
     >
-      <RoomHeader title={title} />
+      <RoomHeader title={title} roomType={roomType} />
       <List
         sx={{
           maxHeight: "calc(100%-5.5rem)",

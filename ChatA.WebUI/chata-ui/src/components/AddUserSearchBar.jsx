@@ -8,10 +8,16 @@ import { Box } from "@mui/system";
 import { Toolbar } from "@mui/material";
 import { AppBar } from "@material-ui/core";
 import { Typography } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 
-const AddUserSearchBar = ({ rerender, setRerender, selectedRoom, rerenderRooms, setRerenderRooms }) => {
+const AddUserSearchBar = ({
+  rerender,
+  setRerender,
+  selectedRoom,
+  rerenderRooms,
+  setRerenderRooms,
+}) => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState();
   const [user, selectUser] = useState();
@@ -33,7 +39,7 @@ const AddUserSearchBar = ({ rerender, setRerender, selectedRoom, rerenderRooms, 
   const deleteGroupMessageRoom = async () => {
     await axiosInstance.delete(`api/messagerooms/${selectedRoom}`);
     setRerenderRooms(!rerenderRooms);
-  }
+  };
   const renderModal = () => {
     if (users)
       return (
@@ -59,14 +65,14 @@ const AddUserSearchBar = ({ rerender, setRerender, selectedRoom, rerenderRooms, 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Add users in room
           </Typography>
-          <IconButton 
+          <IconButton
             size="large"
             edge="end"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 0.1 }}
           >
-            <DeleteIcon onClick={() => deleteGroupMessageRoom()}/>
+            <DeleteIcon onClick={() => deleteGroupMessageRoom()} />
           </IconButton>
         </Toolbar>
       </AppBar>
