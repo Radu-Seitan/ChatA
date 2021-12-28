@@ -2,15 +2,14 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import {
-  IconButton,
-  ImageListItem,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { IconButton, ImageListItem, Button } from "@mui/material";
 import { AppBar } from "@material-ui/core";
 import Toolbar from "@mui/material/Toolbar";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
+import axiosInstance from "../utils/axios";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -30,6 +29,27 @@ const style = {
 
 const ProfileModal = ({ open, setOpen }) => {
   const { user } = useAuth0();
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [userFromDatabase, setUserFromDatabase] = useState();
+
+  const changeUserDetails = async () => {
+    await axiosInstance.put(`api/users`, {
+      username: username,
+      email: email,
+    });
+  };
+
+  const getUser = async () => {
+    const res = await axiosInstance.get(`api/users/${user.sub}`);
+    setUserFromDatabase(res.data);
+    setUsername(res.data.username);
+    setEmail(res.data.email);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <Modal
@@ -63,6 +83,7 @@ const ProfileModal = ({ open, setOpen }) => {
             flexDirection: "column",
             justifyContent: "space-between",
             marginTop: "20px",
+            gap: "20px",
           }}
         >
           <ImageListItem
@@ -74,12 +95,28 @@ const ProfileModal = ({ open, setOpen }) => {
           >
             <img src={`${user.picture}`} alt="user-profile-pic" />
           </ImageListItem>
-          <ListItem>
-            <ListItemText primary={`Name : ${user.name}`} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary={`Email : ${user.email}`} />
-          </ListItem>
+          <TextField
+            id="outlined-required"
+            label="Name"
+            defaultValue={`${username}`}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            id="outlined-required"
+            label="Email"
+            defaultValue={`${email}`}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            sx={{ marginLeft: "106px" }}
+            onClick={() => {
+              changeUserDetails();
+              setOpen(false);
+            }}
+          >
+            Change details
+          </Button>
         </Box>
       </Box>
     </Modal>

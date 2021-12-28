@@ -71,13 +71,14 @@ namespace ChatA.WebUI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ChangeUserDetails(ChangeUserDetailsCommandModel commandModel)
+        [Authorize]
+        public async Task<ActionResult> ChangeUserDetails([FromBody] ChangeUserDetailsCommandModel commandModel)
         {
             var command = new ChangeUserDetailsCommand
-            {
-                Id = _currentUserService.UserId,
+            {          
                 Username = commandModel.Username,
-                Email = commandModel.Email
+                Email = commandModel.Email,
+                UserId = _currentUserService.UserId
             };
             await _mediator.Send(command);
             return Ok();

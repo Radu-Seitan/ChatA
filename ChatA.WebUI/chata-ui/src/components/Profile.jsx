@@ -61,8 +61,18 @@ const Profile = () => {
           rerender={rerender}
           setRerender={setRerender}
         />
-        <ChatFeed selectedRoom={selectedRoom} title={title} ref={feedRef} />
-        <RoomDetails selectedRoom={selectedRoom} roomType={roomType} rerenderRooms={rerender} setRerenderRooms={setRerender}/>
+        <ChatFeed
+          selectedRoom={selectedRoom}
+          title={title}
+          ref={feedRef}
+          roomType={roomType}
+        />
+        <RoomDetails
+          selectedRoom={selectedRoom}
+          roomType={roomType}
+          rerenderRooms={rerender}
+          setRerenderRooms={setRerender}
+        />
       </Box>
     )
   );

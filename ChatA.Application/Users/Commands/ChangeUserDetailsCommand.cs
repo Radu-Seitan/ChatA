@@ -8,7 +8,7 @@ namespace ChatA.Application.Users.Commands
 {
     public class ChangeUserDetailsCommand : IRequest<Unit>
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
     }
@@ -23,7 +23,7 @@ namespace ChatA.Application.Users.Commands
         }
         public async Task<Unit> Handle(ChangeUserDetailsCommand request, CancellationToken cancellationToken)
         {
-            await _userRepository.ChangeUserDetails(request.Id,request.Username,request.Email);
+            await _userRepository.ChangeUserDetails(request.UserId,request.Username,request.Email);
             return Unit.Value;
         }
     }
@@ -31,7 +31,7 @@ namespace ChatA.Application.Users.Commands
     {
         public ChangeUserDetailsCommandValidator()
         {
-            RuleFor(v => v.Id)
+            RuleFor(v => v.UserId)
                 .NotNull();
             RuleFor(v => v.Username)
                 .MaximumLength(40)
