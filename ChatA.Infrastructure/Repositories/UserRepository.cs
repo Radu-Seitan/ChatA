@@ -45,8 +45,14 @@ namespace ChatA.Infrastructure.Repositories
             {
                 throw new NotFoundException("User cannot be found");
             }
+            var oldUsername = user.Username;
             user.Email = email;
             user.Username = username;
+            var rooms = _appDbContext.MessageRooms.Where(mr => mr.Name.Contains(oldUsername)).ToList();
+            foreach(var room in rooms)
+            {
+                room.Name.Replace(oldUsername, username);
+            }
             await _appDbContext.SaveChangesAsync();
         }
     }
