@@ -51,7 +51,7 @@ namespace ChatA.Infrastructure.Repositories
             var rooms = _appDbContext.MessageRooms.Where(mr => mr.Name.Contains(oldUsername)).ToList();
             foreach(var room in rooms)
             {
-                room.Name.Replace(oldUsername, username);
+                room.Name = room.Name.Replace(oldUsername, username);
             }
             await _appDbContext.SaveChangesAsync();
         }
