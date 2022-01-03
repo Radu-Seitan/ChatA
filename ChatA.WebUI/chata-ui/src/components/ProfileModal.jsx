@@ -66,11 +66,9 @@ const ProfileModal = ({ open, setOpen }) => {
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
+              onClick={() => setOpen(false)}
             >
-              <ExitToAppIcon
-                onClick={() => setOpen(false)}
-                sx={{ cursor: "pointer" }}
-              />
+              <ExitToAppIcon sx={{ cursor: "pointer" }} />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Profile

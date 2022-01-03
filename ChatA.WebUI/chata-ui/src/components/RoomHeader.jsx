@@ -32,8 +32,9 @@ const RoomHeader = ({ title, roomType }) => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
+          onClick={() => setOpen(true)}
         >
-          <GroupsIcon onClick={() => setOpen(true)} />
+          <GroupsIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {checkTitle()}
