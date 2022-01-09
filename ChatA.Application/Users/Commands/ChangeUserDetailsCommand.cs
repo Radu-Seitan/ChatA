@@ -1,6 +1,7 @@
 ﻿using ChatA.Application.Common.Interfaces;
 using FluentValidation;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,11 +12,13 @@ namespace ChatA.Application.Users.Commands
         public string UserId { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public Guid? ImageId { get; set; }
     }
 
     public class ChangeUserDetailsCommandHandler : IRequestHandler<ChangeUserDetailsCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAppImageRepository _appImageRepository;
 
         public ChangeUserDetailsCommandHandler(IUserRepository userRepository)
         {
@@ -23,10 +26,18 @@ namespace ChatA.Application.Users.Commands
         }
         public async Task<Unit> Handle(ChangeUserDetailsCommand request, CancellationToken cancellationToken)
         {
-            await _userRepository.ChangeUserDetails(request.UserId,request.Username,request.Email);
+            var user = await _userRepository.GetUser(request.UserId);
+            if(user.ImageId is not null && request.ImageId is not null)
+            {
+                await _appImageRepository.DeleteImage(user.ImageId.Value);
+            }
+
+            await _userRepository.ChangeUserDetails(request.UserId, request.Username, request.Email, request.ImageId);
+
             return Unit.Value;
         }
     }
+
     public class ChangeUserDetailsCommandValidator : AbstractValidator<ChangeUserDetailsCommand>
     {
         public ChangeUserDetailsCommandValidator()
