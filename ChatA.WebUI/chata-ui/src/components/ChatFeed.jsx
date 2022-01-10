@@ -27,6 +27,10 @@ const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
     }
   }, [selectedRoom]);
 
+  useEffect(() => {
+    containerRef.current.scrollIntoView();
+  });
+
   const renderMessages = useCallback(() => {
     return messages.map((value, index) => {
       if (value.sentBy === user.name)
@@ -76,6 +80,7 @@ const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
         }}
       >
         {messages.length > 0 && renderMessages()}
+        <Box ref={containerRef}></Box>
       </List>
       <MessageForm selectedRoom={selectedRoom} getMessages={getMessages} />
     </Box>
