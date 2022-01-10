@@ -33,7 +33,7 @@ const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
 
   const renderMessages = useCallback(() => {
     return messages.map((value, index) => {
-      if (value.sentBy === user.name)
+      if (value.senderId === user.sub)
         return (
           <MyMessage
             key={`message - ${value} - ${index}`}
