@@ -20,9 +20,10 @@ namespace ChatA.Application.Users.Commands
         private readonly IUserRepository _userRepository;
         private readonly IAppImageRepository _appImageRepository;
 
-        public ChangeUserDetailsCommandHandler(IUserRepository userRepository)
+        public ChangeUserDetailsCommandHandler(IUserRepository userRepository, IAppImageRepository appImageRepository)
         {
             _userRepository = userRepository;
+            _appImageRepository = appImageRepository;
         }
         public async Task<Unit> Handle(ChangeUserDetailsCommand request, CancellationToken cancellationToken)
         {

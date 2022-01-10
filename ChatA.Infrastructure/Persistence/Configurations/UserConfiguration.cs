@@ -18,7 +18,7 @@ namespace ChatA.Infrastructure.Persistence.Configurations
             builder.HasOne(u => u.Image)
                 .WithMany(i => i.Users)
                 .HasForeignKey(u => u.ImageId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
             builder.HasData(
                     new User { Email = "raducseitan@gmail.com", Id = "google-oauth2|109835840698705157612", Username = "Radu Seitan" },

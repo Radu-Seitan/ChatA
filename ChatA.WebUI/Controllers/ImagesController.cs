@@ -23,14 +23,12 @@ namespace ChatA.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] IFormFile file)
+        public async Task<IActionResult> Post(IFormFile file)
         {
             if (file != null)
             {
                 if (file.Length > 0)
                 {
-                    var contentType = Request.Headers["content"].ToString();
-                    Console.WriteLine(file.ContentType);
                     byte[] content = null;
                     using (var fileStream = file.OpenReadStream())
                     using (var memoryStream = new MemoryStream())
@@ -42,7 +40,7 @@ namespace ChatA.WebUI.Controllers
                     var command = new UploadImageCommand
                     {
                         Content = content,
-                        Type = contentType
+                        Type = file.ContentType
                     };
                     var imageId = await _mediator.Send(command);
                     return Ok(imageId);

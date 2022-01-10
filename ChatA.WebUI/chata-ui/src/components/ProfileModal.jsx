@@ -3,7 +3,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import TextField from "@mui/material/TextField";
-import { IconButton, ImageListItem, Button } from "@mui/material";
+import { IconButton, ImageListItem, Button, Input } from "@mui/material";
 import { AppBar } from "@material-ui/core";
 import Toolbar from "@mui/material/Toolbar";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -32,12 +32,28 @@ const ProfileModal = ({ open, setOpen }) => {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [userFromDatabase, setUserFromDatabase] = useState();
+  const [imageUrl, setImageUrl] = useState(
+    `https://res.cloudinary.com/dxd6gnoof/image/upload/v1641837673/no-user-profile-picture-hand-drawn-illustration-53840792_bxrzb8.jpg`
+  );
+  const [imageFile, setImageFile] = useState();
 
   const changeUserDetails = async () => {
+    let imageId = null;
+    if (imageFile) {
+      const uploadData = new FormData();
+      uploadData.append("file", imageFile);
+      const res = await axiosInstance.post(`api/images`, uploadData);
+      imageId = res.data;
+      setImageUrl(`api/images/${res.imageId}`);
+    }
+
     await axiosInstance.put(`api/users`, {
       username: username,
       email: email,
+      imageId: imageId,
     });
+
+    await getUser();
   };
 
   const getUser = async () => {
@@ -49,7 +65,22 @@ const ProfileModal = ({ open, setOpen }) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+    if (userFromDatabase && userFromDatabase.imageId !== null) {
+      setImageUrl(`api/images/${userFromDatabase.imageId}`);
+    }
+  }, [open]);
+
+  const showPreview = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let imageFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (x) => {
+        setImageFile(imageFile);
+        setImageUrl(x.target.result);
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  };
 
   return (
     <Modal
@@ -91,8 +122,15 @@ const ProfileModal = ({ open, setOpen }) => {
               marginLeft: "66px",
             }}
           >
-            <img src={`${user.picture}`} alt="user-profile-pic" />
+            <img src={imageUrl} alt="user-profile-pic" />
           </ImageListItem>
+          <Input
+            type="file"
+            accept="image/*"
+            className={"form-control-file"}
+            onChange={showPreview}
+            id="image-uploader"
+          />
           <TextField
             id="outlined-required"
             label="Name"

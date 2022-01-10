@@ -49,7 +49,7 @@ namespace ChatA.Infrastructure.Repositories
             var oldUsername = user.Username;
             user.Email = email;
             user.Username = username;
-            user.ImageId = imageId;
+            user.ImageId = imageId ?? user.ImageId;
             var rooms = _appDbContext.MessageRooms.Where(mr => mr.Name.Contains(oldUsername)).ToList();
             foreach(var room in rooms)
             {
