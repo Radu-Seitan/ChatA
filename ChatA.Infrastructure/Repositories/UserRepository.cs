@@ -3,6 +3,7 @@ using ChatA.Application.Common.Interfaces;
 using ChatA.Domain.Entities;
 using ChatA.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace ChatA.Infrastructure.Repositories
             return await _appDbContext.Users.Include(u => u.Memberships).Where(u => u.Memberships.Where(m => m.Room == room).Count() == 1).ToListAsync();
         }
 
-        public async Task ChangeUserDetails(string userId, string username, string email)
+        public async Task ChangeUserDetails(string userId, string username, string email, Guid? imageId)
         {
             var user = await _appDbContext.Users.FindAsync(userId);
             if (user is null)
@@ -48,6 +49,7 @@ namespace ChatA.Infrastructure.Repositories
             var oldUsername = user.Username;
             user.Email = email;
             user.Username = username;
+            user.ImageId = imageId ?? user.ImageId;
             var rooms = _appDbContext.MessageRooms.Where(mr => mr.Name.Contains(oldUsername)).ToList();
             foreach(var room in rooms)
             {

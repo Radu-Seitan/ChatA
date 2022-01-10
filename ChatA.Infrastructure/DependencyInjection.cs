@@ -19,6 +19,7 @@ namespace ChatA.Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMessageRoomRepository, MessageRoomRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IAppImageRepository, AppImageRepository>();
             return services;
         }
     }

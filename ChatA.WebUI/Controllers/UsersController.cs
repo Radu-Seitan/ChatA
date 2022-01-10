@@ -78,7 +78,8 @@ namespace ChatA.WebUI.Controllers
             {          
                 Username = commandModel.Username,
                 Email = commandModel.Email,
-                UserId = _currentUserService.UserId
+                UserId = _currentUserService.UserId,
+                ImageId = commandModel.ImageId
             };
             await _mediator.Send(command);
             return Ok();

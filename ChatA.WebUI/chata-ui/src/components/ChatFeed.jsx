@@ -5,7 +5,7 @@ import RoomHeader from "./RoomHeader";
 import { Box } from "@mui/system";
 import { forwardRef, useCallback, useState } from "react";
 import axiosInstance from "../utils/axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { List } from "@mui/material";
 import { useImperativeHandle } from "react";
@@ -13,6 +13,8 @@ import { useImperativeHandle } from "react";
 const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
   const { user } = useAuth0();
   const [messages, setMessages] = useState([]);
+
+  const containerRef = useRef(null);
 
   const getMessages = async () => {
     const res = await axiosInstance.get(`api/messages/${selectedRoom}`);
@@ -47,8 +49,9 @@ const ChatFeed = forwardRef(({ selectedRoom, title, roomType }, ref) => {
 
   useImperativeHandle(ref, () => ({
     addMessage(message) {
-      if (selectedRoom == message.roomId)
+      if (selectedRoom === message.roomId) {
         setMessages((messages) => [...messages, message]);
+      }
     },
   }));
 

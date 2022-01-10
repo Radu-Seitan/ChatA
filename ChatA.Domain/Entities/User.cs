@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChatA.Domain.Entities
 {
@@ -7,6 +8,8 @@ namespace ChatA.Domain.Entities
         public string Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public Guid? ImageId { get; set; }
+        public AppImage Image { get; set; }
         public List<Membership> Memberships { get; set; }
     }
 }
