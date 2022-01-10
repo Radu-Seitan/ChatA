@@ -11,13 +11,29 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useRef } from "react";
 
 const Profile = () => {
-  const { isAuthenticated, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, getIdTokenClaims, user } = useAuth0();
   const [selectedRoom, setSelectedRoom] = useState();
   const [title, setSelectedTitle] = useState("");
   const [connection, setConnection] = useState(null);
   const [roomType, setRoomType] = useState();
   const [rerender, setRerender] = useState(true);
   const feedRef = useRef();
+
+  const checkForUser = async () => {
+    try {
+      const res = await axiosInstance.get(`api/users/${user.sub}`);
+    } catch {
+      await axiosInstance.post(`api/users`, {
+        id: user.sub,
+        username: user.name,
+        email: user.email,
+      });
+    }
+  };
+
+  useEffect(() => {
+    checkForUser();
+  });
 
   getIdTokenClaims().then((e) => {
     localStorage.setItem("token", e.__raw);
